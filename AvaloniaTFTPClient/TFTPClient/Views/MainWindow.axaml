@@ -1,0 +1,68 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:UIClient.ViewModels"
+		x:DataType="vm:MainWindowViewModel"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="300"
+        x:Class="UIClient.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="TFTP Client"
+		Width="640" Height="300"
+		MinWidth="450" MinHeight="252"
+		SizeToContent="Height"
+		CanResize="True">
+
+	<Design.DataContext>
+		<vm:MainWindowViewModel/>
+	</Design.DataContext>
+
+	<Grid ShowGridLines="False" DockPanel.Dock="Left" Margin="2" Name="MyGrid" ClipToBounds="True" IsEnabled="{CompiledBinding !IsBusy}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto"></ColumnDefinition>
+			<ColumnDefinition Width="*" MinWidth="200"></ColumnDefinition>
+			<ColumnDefinition Width="Auto"></ColumnDefinition>
+			<ColumnDefinition Width="Auto"></ColumnDefinition>
+		</Grid.ColumnDefinitions>
+
+		<Label Grid.Row="0" Grid.Column="0" Margin="2" Target="tbServer">Server</Label>
+		<TextBox Name="tbServer" Grid.Row="0" Grid.Column="1" Margin="2" Text="{CompiledBinding Server}"/>
+
+		<Label Grid.Row="1" Grid.Column="0" Margin="2">Operation</Label>
+		<StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="2" Spacing="20">
+			<RadioButton GroupName="welke" IsChecked="{CompiledBinding IsDownload}">_Download</RadioButton>
+			<RadioButton GroupName="welke" IsChecked="{CompiledBinding !IsDownload}">_Upload</RadioButton>
+		</StackPanel>
+
+		<CheckBox IsChecked="{CompiledBinding IsAutoGenerateNames}" Grid.Row="2" Grid.Column="1" Margin="2">_Auto construct remote filename</CheckBox>
+		
+		<Label Grid.Row="3" Grid.Column="0" Margin="2">Remote base dir</Label>
+		<TextBox Grid.Row="3" Grid.Column="1" Margin="2" IsEnabled="{CompiledBinding IsAutoGenerateNames}" Text="{CompiledBinding RemoteDir}"/>
+
+		<Label Grid.Row="4" Grid.Column="0" Margin="2">Remote file</Label>
+		<TextBox Grid.Row="4" Grid.Column="1" Margin="2" Text="{CompiledBinding RemoteFile}" IsReadOnly="{CompiledBinding IsAutoGenerateNames}"/>
+
+		<Label Grid.Row="5" Grid.Column="0" Margin="2">Local file</Label>
+		<TextBox Grid.Row="5" Grid.Column="1" Margin="2"  Text="{CompiledBinding LocalFile}"/>
+		<Button Grid.Row="5" Grid.Column="2" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" Command="{CompiledBinding CommandSelectFile}">...</Button>
+
+		<StackPanel Margin="2" Spacing="2" Grid.Column="6" Grid.RowSpan="7">
+			<Button Command="{CompiledBinding CommandSettings}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">_Settings</Button>
+			<Button Margin="0 2 0 0" Command="{CompiledBinding CommandDownloadUpload}" DockPanel.Dock="Bottom" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">_Go</Button>
+		</StackPanel>
+		
+		<StackPanel Orientation="Horizontal" Grid.Row="6" Grid.ColumnSpan="4" Margin="2">
+			<ProgressBar Height="14" Width="100" CornerRadius="2" Value="{CompiledBinding Progress}" IsIndeterminate="{CompiledBinding IsIndeterminateProgress}"></ProgressBar>
+			<Label VerticalAlignment="Center" Content="{CompiledBinding Status}" ToolTip.Tip="{CompiledBinding Status}"/>
+		</StackPanel>
+	</Grid>
+</Window>

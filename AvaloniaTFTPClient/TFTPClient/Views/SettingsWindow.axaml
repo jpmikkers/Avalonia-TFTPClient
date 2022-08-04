@@ -1,0 +1,65 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:UIClient.ViewModels"
+		x:DataType="vm:SettingsWindowViewModel"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="320"
+        x:Class="UIClient.Views.SettingsWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Settings"
+		Width="250" Height="220"
+		SizeToContent="WidthAndHeight"
+		CanResize="False">
+
+	<Window.Resources>
+		<vm:TextCaseConverter x:Key="textCaseConverter"/>
+	</Window.Resources>
+	
+	<Design.DataContext>
+		<vm:SettingsWindowViewModel/>
+	</Design.DataContext>
+
+	<!-- 
+		<TextBox Text="{Binding TheContent, Converter={StaticResource textCaseConverter}, ConverterParameter=lower}" Grid.Row="4" Grid.Column="1" Margin="2"></TextBox>
+	-->
+
+	<Grid Margin="4">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto"/>
+			<ColumnDefinition Width="*" MinWidth="150"/>
+			<ColumnDefinition Width="Auto"/>
+		</Grid.ColumnDefinitions>
+		<Label Grid.Row="0" Grid.Column="0" Margin="2">Don't fragment packets</Label>
+		<CheckBox IsChecked="{Binding DontFragment}" Grid.Row="0" Grid.Column="1" Margin="2"></CheckBox>
+
+		<Label Grid.Row="1" Grid.Column="0" Margin="2">Blocksize</Label>
+		<NumericUpDown Value="{Binding BlockSize}" Grid.Row="1" Grid.Column="1" Margin="2" ClipValueToMinMax="True" ParsingNumberStyle="Integer" Minimum="512" Maximum="8192" Increment="16"></NumericUpDown>
+		<Label Grid.Row="1" Grid.Column="2" Margin="2">bytes</Label>
+
+		<Label Grid.Row="2" Grid.Column="0" Margin="2">TTL</Label>
+		<NumericUpDown Value="{Binding Ttl}" ClipValueToMinMax="True" ParsingNumberStyle="Integer" Minimum="-1" Maximum="20" Grid.Row="2" Grid.Column="1" Margin="2"></NumericUpDown>
+		<Label Grid.Row="2" Grid.Column="2" Margin="2">hops</Label>
+
+		<Label Grid.Row="3" Grid.Column="0" Margin="2">Timeout</Label>
+		<NumericUpDown Value="{Binding Timeout}" ClipValueToMinMax="True" ParsingNumberStyle="Integer" Minimum="10" Maximum="10000" Grid.Row="3" Grid.Column="1" Margin="2" Increment="10"></NumericUpDown>
+		<Label Grid.Row="3" Grid.Column="2" Margin="2">ms</Label>
+
+		<Label Grid.Row="4" Grid.Column="0" Margin="2">Retries</Label>
+		<NumericUpDown Value="{Binding Retries}" ClipValueToMinMax="True" ParsingNumberStyle="Integer" Minimum="0" Maximum="20" Grid.Row="4" Grid.Column="1" Margin="2"></NumericUpDown>
+		<Label Grid.Row="4" Grid.Column="2" Margin="2">times</Label>
+		
+		<StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="4" Margin="2">
+			<Button IsDefault="True" Command="{Binding CommandOK}">OK</Button>
+			<Button IsCancel="True" Command="{Binding CommandCancel}">Cancel</Button>
+		</StackPanel>
+	</Grid>
+</Window>

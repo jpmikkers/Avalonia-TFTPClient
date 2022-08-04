@@ -1,0 +1,33 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:UIClient"
+             x:Class="UIClient.App">
+	<Application.DataTemplates>
+		<local:ViewLocator/>
+	</Application.DataTemplates>
+
+	<Application.Styles>
+		<FluentTheme Mode="Dark" DensityStyle="Normal"></FluentTheme>
+		<Style Selector="Window">
+			<Setter Property="Background" Value="#FF233555"/>
+		</Style>
+
+		<!-- <StyleInclude Source="avares://Citrus.Avalonia/Citrus.xaml"/> -->
+		<!-- <FluentTheme Mode="Light"/> -->
+
+		<!--
+		
+		<Style Selector="Button">
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Border BorderThickness="0" Background="Beige" BorderBrush="Black" Padding="4" Margin="4" CornerRadius="4" BoxShadow="2 2 2 2 Gray">
+							<ContentPresenter Content="{TemplateBinding Content}" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+						</Border>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+		-->
+	</Application.Styles>
+</Application>
