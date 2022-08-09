@@ -10,13 +10,13 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Baksteen.Net.TFTP.Client;
+using System;
+using System.Reflection;
 
 namespace UIClient.Views
 {
     public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
     {
-        Timer timer;   
-
         public MainWindow()
         {
             InitializeComponent();
@@ -24,22 +24,7 @@ namespace UIClient.Views
             this.WhenActivated(d => d(ViewModel!.InteractionSaveFile.RegisterHandler(DoShowSaveFileDialogAsync)));
             this.WhenActivated(d => d(ViewModel!.InteractionShowError.RegisterHandler(DoShowErrorAsync)));
             this.WhenActivated(d => d(ViewModel!.InteractionShowSettings.RegisterHandler(DoShowSettingsAsync)));
-            timer = new Timer();
-            timer.Elapsed += Timer_Elapsed;
-            timer.Interval = 100;
-            timer.Start();
-        }
-
-        private void Timer_Elapsed(object? sender, ElapsedEventArgs e)
-        {
-            //Dispatcher.UIThread.Post(() =>
-            //{
-            //    if(MyGrid.IsMeasureValid)
-            //    {
-            //        MinWidth = MyGrid.DesiredSize.Width + 120.0;
-            //        MinHeight = MyGrid.DesiredSize.Height + 50.0;
-            //    }
-            //});
+            //this.Title = $"{Assembly.GetEntryAssembly()!.GetName().Version}";
         }
 
         private async Task DoShowErrorAsync(InteractionContext<string, Unit> ic)

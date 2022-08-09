@@ -38,24 +38,24 @@
 			<ColumnDefinition Width="*" MinWidth="150"/>
 			<ColumnDefinition Width="Auto"/>
 		</Grid.ColumnDefinitions>
-		<Label Grid.Row="0" Grid.Column="0" Margin="2">Don't fragment packets</Label>
-		<CheckBox IsChecked="{Binding DontFragment}" Grid.Row="0" Grid.Column="1" Margin="2"></CheckBox>
+		<Label Target="fieldDontFragment" Grid.Row="0" Grid.Column="0" Margin="2">Don't fragment packets</Label>
+		<CheckBox Name="fieldDontFragment" IsChecked="{Binding DontFragment}" Grid.Row="0" Grid.Column="1" Margin="2"></CheckBox>
 
-		<Label Grid.Row="1" Grid.Column="0" Margin="2">Blocksize</Label>
-		<NumericUpDown Value="{Binding BlockSize}" Grid.Row="1" Grid.Column="1" Margin="2" ClipValueToMinMax="True" ParsingNumberStyle="Integer" Minimum="512" Maximum="8192" Increment="16"></NumericUpDown>
+		<Label Target="fieldBlockSize" Grid.Row="1" Grid.Column="0" Margin="2">Blocksize</Label>
+		<NumericUpDown Name="fieldBlockSize" Value="{Binding BlockSize}" Grid.Row="1" Grid.Column="1" Margin="2" ClipValueToMinMax="True" ParsingNumberStyle="Integer" Minimum="512" Maximum="8192" Increment="16"></NumericUpDown>
 		<Label Grid.Row="1" Grid.Column="2" Margin="2">bytes</Label>
 
-		<Label Grid.Row="2" Grid.Column="0" Margin="2">TTL</Label>
-		<NumericUpDown Value="{Binding Ttl}" ClipValueToMinMax="True" ParsingNumberStyle="Integer" Minimum="-1" Maximum="20" Grid.Row="2" Grid.Column="1" Margin="2"></NumericUpDown>
-		<Label Grid.Row="2" Grid.Column="2" Margin="2">hops</Label>
+		<Label Target="fieldTTL" Grid.Row="2" Grid.Column="0" Margin="2">TTL</Label>
+		<NumericUpDown Name="fieldTTL" Value="{Binding Ttl}" ClipValueToMinMax="True" ParsingNumberStyle="Integer" Minimum="-1" Maximum="20" Grid.Row="2" Grid.Column="1" Margin="2"></NumericUpDown>
+		<Label Target="fieldTTL" Grid.Row="2" Grid.Column="2" Margin="2">hops</Label>
 
-		<Label Grid.Row="3" Grid.Column="0" Margin="2">Timeout</Label>
-		<NumericUpDown Value="{Binding Timeout}" ClipValueToMinMax="True" ParsingNumberStyle="Integer" Minimum="10" Maximum="10000" Grid.Row="3" Grid.Column="1" Margin="2" Increment="10"></NumericUpDown>
-		<Label Grid.Row="3" Grid.Column="2" Margin="2">ms</Label>
+		<Label Target="fieldTimeout" Grid.Row="3" Grid.Column="0" Margin="2">Timeout</Label>
+		<NumericUpDown Name="fieldTimeout" Value="{Binding Timeout}" ClipValueToMinMax="True" ParsingNumberStyle="Integer" Minimum="10" Maximum="10000" Grid.Row="3" Grid.Column="1" Margin="2" Increment="10"></NumericUpDown>
+		<Label Target="fieldTimeout" Grid.Row="3" Grid.Column="2" Margin="2">ms</Label>
 
-		<Label Grid.Row="4" Grid.Column="0" Margin="2">Retries</Label>
-		<NumericUpDown Value="{Binding Retries}" ClipValueToMinMax="True" ParsingNumberStyle="Integer" Minimum="0" Maximum="20" Grid.Row="4" Grid.Column="1" Margin="2"></NumericUpDown>
-		<Label Grid.Row="4" Grid.Column="2" Margin="2">times</Label>
+		<Label Target="fieldRetries" Grid.Row="4" Grid.Column="0" Margin="2">Retries</Label>
+		<NumericUpDown Name="fieldRetries" Value="{Binding Retries}" ClipValueToMinMax="True" ParsingNumberStyle="Integer" Minimum="0" Maximum="20" Grid.Row="4" Grid.Column="1" Margin="2"></NumericUpDown>
+		<Label Target="fieldRetries" Grid.Row="4" Grid.Column="2" Margin="2">times</Label>
 		
 		<StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="4" Margin="2">
 			<Button IsDefault="True" Command="{Binding CommandOK}">OK</Button>

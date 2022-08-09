@@ -34,26 +34,26 @@
 			<ColumnDefinition Width="Auto"></ColumnDefinition>
 		</Grid.ColumnDefinitions>
 
-		<Label Grid.Row="0" Grid.Column="0" Margin="2" Target="tbServer">Server</Label>
-		<TextBox Name="tbServer" Grid.Row="0" Grid.Column="1" Margin="2" Text="{CompiledBinding Server}"/>
+		<Label Target="fieldServer" Grid.Row="0" Grid.Column="0" Margin="2" >Server</Label>
+		<TextBox Name="fieldServer" Grid.Row="0" Grid.Column="1" Margin="2" Text="{CompiledBinding Server}"/>
 
-		<Label Grid.Row="1" Grid.Column="0" Margin="2">Operation</Label>
-		<StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="2" Spacing="20">
-			<RadioButton GroupName="welke" IsChecked="{CompiledBinding IsDownload}">_Download</RadioButton>
-			<RadioButton GroupName="welke" IsChecked="{CompiledBinding !IsDownload}">_Upload</RadioButton>
+		<Label Target="fieldOperation" Grid.Row="1" Grid.Column="0" Margin="2">Operation</Label>
+		<StackPanel Name="fieldOperation" Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="2" Spacing="20">
+			<RadioButton GroupName="groupOperation" IsChecked="{CompiledBinding IsDownload}">_Download</RadioButton>
+			<RadioButton GroupName="groupOperation" IsChecked="{CompiledBinding !IsDownload}">_Upload</RadioButton>
 		</StackPanel>
 
 		<CheckBox IsChecked="{CompiledBinding IsAutoGenerateNames}" Grid.Row="2" Grid.Column="1" Margin="2">_Auto construct remote filename</CheckBox>
 		
-		<Label Grid.Row="3" Grid.Column="0" Margin="2">Remote base dir</Label>
-		<TextBox Grid.Row="3" Grid.Column="1" Margin="2" IsEnabled="{CompiledBinding IsAutoGenerateNames}" Text="{CompiledBinding RemoteDir}"/>
+		<Label Target="fieldRemoteDir" Grid.Row="3" Grid.Column="0" Margin="2">Remote base dir</Label>
+		<TextBox Name="fieldRemoteDir" Grid.Row="3" Grid.Column="1" Margin="2" IsEnabled="{CompiledBinding IsAutoGenerateNames}" Text="{CompiledBinding RemoteDir}"/>
 
-		<Label Grid.Row="4" Grid.Column="0" Margin="2">Remote file</Label>
-		<TextBox Grid.Row="4" Grid.Column="1" Margin="2" Text="{CompiledBinding RemoteFile}" IsReadOnly="{CompiledBinding IsAutoGenerateNames}"/>
+		<Label Target="fieldRemoteFile" Grid.Row="4" Grid.Column="0" Margin="2">Remote file</Label>
+		<TextBox Name="fieldRemoteFile" Grid.Row="4" Grid.Column="1" Margin="2" Text="{CompiledBinding RemoteFile}" IsReadOnly="{CompiledBinding IsAutoGenerateNames}"/>
 
-		<Label Grid.Row="5" Grid.Column="0" Margin="2">Local file</Label>
-		<TextBox Grid.Row="5" Grid.Column="1" Margin="2"  Text="{CompiledBinding LocalFile}"/>
-		<Button Grid.Row="5" Grid.Column="2" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" Command="{CompiledBinding CommandSelectFile}">...</Button>
+		<Label Target="fieldLocalFile" Grid.Row="5" Grid.Column="0" Margin="2">Local file</Label>
+		<TextBox Name="fieldLocalFile" Grid.Row="5" Grid.Column="1" Margin="2" Text="{CompiledBinding LocalFile}"/>
+		<Button Grid.Row="5" Grid.Column="2" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" Command="{CompiledBinding CommandSelectFile}" ToolTip.Tip="Select file">...</Button>
 
 		<StackPanel Margin="2" Spacing="2" Grid.Column="6" Grid.RowSpan="7">
 			<Button Command="{CompiledBinding CommandSettings}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">_Settings</Button>
