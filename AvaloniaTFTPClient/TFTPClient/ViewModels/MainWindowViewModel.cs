@@ -21,7 +21,7 @@ namespace UIClient.ViewModels
         private string _status = " ";
         private bool _isAutoGenerateNames = true;
         private bool _isDownload = true;
-        private double _progress = 12.0;
+        private double _progress = 0.0;
         private string _remoteDir = "";
         private string _remoteFile = "";
         private string _localFile = "";
@@ -258,15 +258,6 @@ namespace UIClient.ViewModels
         {
             Progress = (e.TransferSize > 0) ? (int)(100.0 * e.Transferred / e.TransferSize) : 0;
             Status = $"({e.Transferred}/{((e.TransferSize >= 0) ? e.TransferSize.ToString() : "?")} bytes) {(e.IsUpload ? "Uploading" : "Downloading")} '{e.Filename}'";
-            //if(InvokeRequired)
-            //{
-            //    Invoke(new EventHandler<TFTPClient.ProgressEventArgs>(OnProgress), sender, e);
-            //}
-            //else
-            //{
-            //    toolStripStatusLabel1.Text = $"({e.Transferred}/{((e.TransferSize >= 0) ? e.TransferSize.ToString() : "?")} bytes) {(e.IsUpload ? "Uploading" : "Downloading")} '{e.Filename}'";
-            //    toolStripProgressBar1.Value = (e.TransferSize > 0) ? (int)(100.0 * e.Transferred / e.TransferSize) : 0;
-            //}
         }
 
         private async Task DoSelectFile()
