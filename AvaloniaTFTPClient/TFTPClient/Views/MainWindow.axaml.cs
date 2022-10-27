@@ -5,6 +5,7 @@ using Avalonia.Interactivity;
 using Avalonia.Dialogs;
 using Avalonia.ReactiveUI;
 using UIClient.ViewModels;
+using Avalonia.Win32;
 using ReactiveUI;
 using System.Reactive;
 using System.Reactive.Linq;
@@ -12,6 +13,9 @@ using System.Threading.Tasks;
 using Baksteen.Net.TFTP.Client;
 using System;
 using System.Reflection;
+using Avalonia.Platform.Storage;
+using System.Linq;
+using Avalonia.Platform.Storage.FileIO;
 
 namespace UIClient.Views
 {
@@ -44,20 +48,48 @@ namespace UIClient.Views
 
         private async Task DoShowOpenFileDialogAsync(InteractionContext<Unit,string?> ic)
         {
-            //var files=await new OpenFileDialog().ShowAsync(this);
-            //if(files!=null && files.Length>0)
-            //{
-            //    ic.SetOutput(files[0]);
-            //}
-            //else
-            //{
-            //    ic.SetOutput(null);
-            //}
+            var files = await StorageProvider.OpenFilePickerAsync(
+                new FilePickerOpenOptions { 
+                    AllowMultiple = false, 
+                    FileTypeFilter = new[] { FilePickerFileTypes.All },
+                    Title = "Select file to upload.." 
+                }
+            );
+
+            if(files.Count > 0)
+            {
+                if(files[0].TryGetUri(out var uri))
+                {
+                    ic.SetOutput(uri.LocalPath);
+                }
+            }
+            else
+            {
+                ic.SetOutput(null);
+            }
         }
 
         private async Task DoShowSaveFileDialogAsync(InteractionContext<Unit, string?> ic)
         {
-            //ic.SetOutput(await new SaveFileDialog().ShowAsync(this));
+            var file = await StorageProvider.SaveFilePickerAsync(
+                new FilePickerSaveOptions { 
+                    ShowOverwritePrompt = true,     // doesn't work most of the time for managed mode..
+                    Title = "Save file as..",
+                    FileTypeChoices = new[] { FilePickerFileTypes.All }
+                }
+            );
+
+            if(file != null)
+            {
+                if(file.TryGetUri(out var uri))
+                {
+                    ic.SetOutput(uri.LocalPath);
+                }
+            }
+            else
+            {
+                ic.SetOutput(null);
+            }
         }
     }
 }
