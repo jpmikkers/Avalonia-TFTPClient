@@ -44,20 +44,20 @@ namespace UIClient.Views
 
         private async Task DoShowOpenFileDialogAsync(InteractionContext<Unit,string?> ic)
         {
-            var files=await new OpenFileDialog().ShowAsync(this);
-            if(files!=null && files.Length>0)
-            {
-                ic.SetOutput(files[0]);
-            }
-            else
-            {
-                ic.SetOutput(null);
-            }
+            //var files=await new OpenFileDialog().ShowAsync(this);
+            //if(files!=null && files.Length>0)
+            //{
+            //    ic.SetOutput(files[0]);
+            //}
+            //else
+            //{
+            //    ic.SetOutput(null);
+            //}
         }
 
         private async Task DoShowSaveFileDialogAsync(InteractionContext<Unit, string?> ic)
         {
-            ic.SetOutput(await new SaveFileDialog().ShowAsync(this));
+            //ic.SetOutput(await new SaveFileDialog().ShowAsync(this));
         }
     }
 }

@@ -7,11 +7,13 @@
 	</Application.DataTemplates>
 
 	<Application.Styles>
-		<FluentTheme Mode="Dark" DensityStyle="Normal"></FluentTheme>
+		<!-- <SimpleTheme Mode="Dark"/> -->
+		
+		<FluentTheme Mode="Light" DensityStyle="Normal"/>
 		<Style Selector="Window">
-			<Setter Property="Background" Value="#FF233555"/>
+			<Setter Property="Background" Value="#FFBBBBCC"/>
 		</Style>
-
+		
 		<!-- <StyleInclude Source="avares://Citrus.Avalonia/Citrus.xaml"/> -->
 		<!-- <FluentTheme Mode="Light"/> -->
 
