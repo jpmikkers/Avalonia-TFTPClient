@@ -20,17 +20,17 @@
     <TrimmableAssembly Include="Avalonia.Themes.Default" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="11.0.0-preview3" />
-    <PackageReference Include="Avalonia.Desktop" Version="11.0.0-preview3" />
+    <PackageReference Include="Avalonia" Version="11.0.0-preview4" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.0.0-preview4" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.0-preview3" />
-    <PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="11.0.0-preview3" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0-preview3" />
-    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.0-preview3" />
-    <PackageReference Include="Avalonia.Themes.Simple" Version="11.0.0-preview3" />
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.0-preview4" />
+    <PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="11.0.0-preview4" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0-preview4" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.0-preview4" />
+    <PackageReference Include="Avalonia.Themes.Simple" Version="11.0.0-preview4" />
     <PackageReference Include="Baksteen.Net.TFTP.Client" Version="1.0.0" />
-    <PackageReference Include="Material.Avalonia" Version="3.0.0-avalonia11-preview2.117-nightly" />
+    <PackageReference Include="Material.Avalonia" Version="3.0.0-avalonia11-preview2.121-nightly" />
     <PackageReference Include="MessageBox.Avalonia" Version="2.3.1-prev2" />
-    <PackageReference Include="XamlNameReferenceGenerator" Version="1.3.4" />
+    <PackageReference Include="XamlNameReferenceGenerator" Version="1.4.2" />
   </ItemGroup>
 </Project>
