@@ -3,15 +3,16 @@
              xmlns:local="using:UIClient"
              x:Class="UIClient.App">
 	<Application.DataTemplates>
-		<local:ViewLocator/>
+		<!--<local:ViewLocator/>-->
 	</Application.DataTemplates>
-
+	
 	<Application.Styles>
-		<!-- <SimpleTheme Mode="Dark"/> -->
+
+		<!--<SimpleTheme/>-->
+		<FluentTheme/>
 		
-		<FluentTheme Mode="Light" DensityStyle="Normal"/>
 		<Style Selector="Window">
-			<Setter Property="Background" Value="#FFBBBBCC"/>
+			<Setter Property="Background" Value="#FF444444"/>
 		</Style>
 		
 		<!-- <StyleInclude Source="avares://Citrus.Avalonia/Citrus.xaml"/> -->
