@@ -8,12 +8,12 @@
 	
 	<Application.Styles>
 
-		<!--<SimpleTheme/>-->
-		<FluentTheme/>
+		<SimpleTheme/>
+		<!--<FluentTheme/>-->
 		
-		<Style Selector="Window">
+		<!--<Style Selector="Window">
 			<Setter Property="Background" Value="#FF444444"/>
-		</Style>
+		</Style>-->
 		
 		<!-- <StyleInclude Source="avares://Citrus.Avalonia/Citrus.xaml"/> -->
 		<!-- <FluentTheme Mode="Light"/> -->
