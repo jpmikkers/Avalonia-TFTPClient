@@ -10,8 +10,8 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Baksteen.Net.TFTP.Client;
-using System;
-using System.Reflection;
+using Avalonia.Platform.Storage;
+using MessageBox.Avalonia.DTO;
 
 namespace UIClient.Views
 {
@@ -29,8 +29,12 @@ namespace UIClient.Views
 
         private async Task DoShowErrorAsync(InteractionContext<string, Unit> ic)
         {
-            var messageBoxStandardWindow = MessageBox.Avalonia.MessageBoxManager.GetMessageBoxStandardWindow("Error", ic.Input);
-            await messageBoxStandardWindow.ShowDialog(this);
+            var messageBoxStandardWindow = MsBox.Avalonia.MessageBoxManager.GetMessageBoxStandard(
+                new MessageBoxStandardParams { 
+                    ContentTitle = "Error", 
+                    ContentMessage = ic.Input 
+                });
+            await messageBoxStandardWindow.ShowWindowDialogAsync(this);
             ic.SetOutput(Unit.Default);
         }
 
@@ -44,10 +48,15 @@ namespace UIClient.Views
 
         private async Task DoShowOpenFileDialogAsync(InteractionContext<Unit,string?> ic)
         {
-            var files=await new OpenFileDialog().ShowAsync(this);
-            if(files!=null && files.Length>0)
+            var files = await StorageProvider.OpenFilePickerAsync(
+                new FilePickerOpenOptions { 
+                    AllowMultiple = false, 
+                    Title = "Select file" 
+                });
+            
+            if(files!=null && files.Count>0)
             {
-                ic.SetOutput(files[0]);
+                ic.SetOutput(files[0].Path.AbsolutePath);
             }
             else
             {
@@ -57,7 +66,20 @@ namespace UIClient.Views
 
         private async Task DoShowSaveFileDialogAsync(InteractionContext<Unit, string?> ic)
         {
-            ic.SetOutput(await new SaveFileDialog().ShowAsync(this));
+            var file = await StorageProvider.SaveFilePickerAsync(
+                new FilePickerSaveOptions { 
+                    ShowOverwritePrompt = true, 
+                    Title = "Save as.." 
+                });
+
+            if(file != null)
+            {
+                ic.SetOutput(file.Path.AbsolutePath);
+            }
+            else
+            {
+                ic.SetOutput(null);
+            }
         }
     }
 }

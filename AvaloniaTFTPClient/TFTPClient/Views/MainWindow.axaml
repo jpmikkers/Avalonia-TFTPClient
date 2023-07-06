@@ -4,12 +4,12 @@
 		x:DataType="vm:MainWindowViewModel"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="300"
+        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="200"
         x:Class="UIClient.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="TFTP Client"
-		Width="640" Height="300"
-		MinWidth="450" MinHeight="252"
+		Width="500" Height="200"
+		MinWidth="500" MinHeight="100"
 		SizeToContent="Height"
 		CanResize="True">
 
@@ -26,6 +26,7 @@
 			<RowDefinition Height="Auto"></RowDefinition>
 			<RowDefinition Height="Auto"></RowDefinition>
 			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="*"></RowDefinition>
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -53,7 +54,7 @@
 
 		<Label Target="fieldLocalFile" Grid.Row="5" Grid.Column="0" Margin="2">Local file</Label>
 		<TextBox Name="fieldLocalFile" Grid.Row="5" Grid.Column="1" Margin="2" Text="{CompiledBinding LocalFile}"/>
-		<Button Grid.Row="5" Grid.Column="2" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" Command="{CompiledBinding CommandSelectFile}" ToolTip.Tip="Select file">...</Button>
+		<Button Grid.Row="5" Grid.Column="2" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Command="{CompiledBinding CommandSelectFile}" ToolTip.Tip="Select file">...</Button>
 
 		<StackPanel Margin="2" Spacing="2" Grid.Column="6" Grid.RowSpan="7">
 			<Button Command="{CompiledBinding CommandSettings}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">_Settings</Button>

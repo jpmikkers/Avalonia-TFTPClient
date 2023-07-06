@@ -10,16 +10,11 @@ namespace UIClient
 {
     public partial class App : Application
     {
-        public override void Initialize()
-        {
-            AvaloniaXamlLoader.Load(this);
-        }
-
         public override void OnFrameworkInitializationCompleted()
         {
             // suspension, see https://habr.com/ru/post/462307/ and https://docs.avaloniaui.net/guides/deep-dives/reactiveui/data-persistence
             //// Create the AutoSuspendHelper.
-            var suspension = new AutoSuspendHelper(ApplicationLifetime);
+            var suspension = new AutoSuspendHelper(ApplicationLifetime!);
             RxApp.SuspensionHost.CreateNewAppState = () => new MainWindowViewModel();
             RxApp.SuspensionHost.SetupDefaultSuspendResume(new SuspensionDriver());
             suspension.OnFrameworkInitializationCompleted();

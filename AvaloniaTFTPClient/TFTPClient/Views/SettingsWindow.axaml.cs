@@ -1,11 +1,8 @@
 using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
-using UIClient.ViewModels;
 using ReactiveUI;
-using System.Threading.Tasks;
 using System;
+using UIClient.ViewModels;
 
 namespace UIClient.Views
 {
@@ -19,11 +16,6 @@ namespace UIClient.Views
 #if DEBUG
             this.AttachDevTools();
 #endif
-        }
-
-        private void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
         }
     }
 }
