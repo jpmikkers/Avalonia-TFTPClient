@@ -11,7 +11,7 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Baksteen.Net.TFTP.Client;
 using Avalonia.Platform.Storage;
-using MessageBox.Avalonia.DTO;
+using MsBox.Avalonia.Dto;
 
 namespace UIClient.Views
 {
