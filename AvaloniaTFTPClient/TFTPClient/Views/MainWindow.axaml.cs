@@ -21,8 +21,8 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
 
     private async Task DoShowErrorAsync(InteractionContext<string, Unit> ic)
     {
-        var messageBoxStandardWindow = MessageBox.Avalonia.MessageBoxManager.GetMessageBoxStandardWindow("Error", ic.Input);
-        await messageBoxStandardWindow.ShowDialog(this);
+        var messageBoxStandardWindow = MsBox.Avalonia.MessageBoxManager.GetMessageBoxStandard("Error", ic.Input);
+        await messageBoxStandardWindow.ShowWindowDialogAsync(this);
         ic.SetOutput(Unit.Default);
     }
 
