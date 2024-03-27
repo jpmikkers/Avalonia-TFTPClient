@@ -4,12 +4,12 @@
 		x:DataType="vm:MainWindowViewModel"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="200"
+        mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="198"
         x:Class="UIClient.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="TFTP Client"
-		Width="500" Height="200"
-		MinWidth="500" MinHeight="100"
+		Width="450" Height="198"
+		MinWidth="450" MinHeight="198"
 		SizeToContent="Height"
 		CanResize="True">
 

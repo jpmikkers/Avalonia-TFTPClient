@@ -1,65 +1,173 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:UIClient.ViewModels"
-		x:DataType="vm:SettingsWindowViewModel"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="320"
-        x:Class="UIClient.Views.SettingsWindow"
-        Icon="/Assets/avalonia-logo.ico"
-        Title="Settings"
-		Width="250" Height="220"
-		SizeToContent="WidthAndHeight"
-		CanResize="False">
+<Window
+    x:Class="UIClient.Views.SettingsWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:UIClient.ViewModels"
+    Title="Settings"
+    Width="250"
+    Height="220"
+    d:DesignHeight="320"
+    d:DesignWidth="450"
+    x:DataType="vm:SettingsWindowViewModel"
+    CanResize="False"
+    Icon="/Assets/avalonia-logo.ico"
+    SizeToContent="WidthAndHeight"
+    mc:Ignorable="d">
 
-	<Window.Resources>
-		<vm:TextCaseConverter x:Key="textCaseConverter"/>
-	</Window.Resources>
-	
-	<Design.DataContext>
-		<vm:SettingsWindowViewModel/>
-	</Design.DataContext>
+    <Window.Resources>
+        <vm:TextCaseConverter x:Key="textCaseConverter" />
+    </Window.Resources>
 
-	<!-- 
+    <Design.DataContext>
+        <vm:SettingsWindowViewModel />
+    </Design.DataContext>
+
+    <!--
 		<TextBox Text="{Binding TheContent, Converter={StaticResource textCaseConverter}, ConverterParameter=lower}" Grid.Row="4" Grid.Column="1" Margin="2"></TextBox>
 	-->
 
-	<Grid Margin="4">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-		</Grid.RowDefinitions>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="Auto"/>
-			<ColumnDefinition Width="*" MinWidth="150"/>
-			<ColumnDefinition Width="Auto"/>
-		</Grid.ColumnDefinitions>
-		<Label Target="fieldDontFragment" Grid.Row="0" Grid.Column="0" Margin="2">Don't fragment packets</Label>
-		<CheckBox Name="fieldDontFragment" IsChecked="{Binding DontFragment}" Grid.Row="0" Grid.Column="1" Margin="2"></CheckBox>
+    <Grid Margin="4">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" MinWidth="150" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Label
+            Grid.Row="0"
+            Grid.Column="0"
+            Margin="2"
+            Target="fieldDontFragment">
+            Don't fragment packets
+        </Label>
+        <CheckBox
+            Name="fieldDontFragment"
+            Grid.Row="0"
+            Grid.Column="1"
+            Margin="2"
+            IsChecked="{Binding DontFragment}" />
 
-		<Label Target="fieldBlockSize" Grid.Row="1" Grid.Column="0" Margin="2">Blocksize</Label>
-		<NumericUpDown Name="fieldBlockSize" Value="{Binding BlockSize}" Grid.Row="1" Grid.Column="1" Margin="2" ClipValueToMinMax="True" ParsingNumberStyle="Integer" Minimum="512" Maximum="8192" Increment="16"></NumericUpDown>
-		<Label Grid.Row="1" Grid.Column="2" Margin="2">bytes</Label>
+        <Label
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="2"
+            Target="fieldBlockSize">
+            Blocksize
+        </Label>
+        <NumericUpDown
+            Name="fieldBlockSize"
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="2"
+            ClipValueToMinMax="True"
+            FormatString="0"
+            Increment="16"
+            Maximum="8192"
+            Minimum="512"
+            ParsingNumberStyle="Integer"
+            Value="{Binding BlockSize}" />
+        <Label
+            Grid.Row="1"
+            Grid.Column="2"
+            Margin="2">
+            bytes
+        </Label>
 
-		<Label Target="fieldTTL" Grid.Row="2" Grid.Column="0" Margin="2">TTL</Label>
-		<NumericUpDown Name="fieldTTL" Value="{Binding Ttl}" ClipValueToMinMax="True" ParsingNumberStyle="Integer" Minimum="-1" Maximum="20" Grid.Row="2" Grid.Column="1" Margin="2"></NumericUpDown>
-		<Label Target="fieldTTL" Grid.Row="2" Grid.Column="2" Margin="2">hops</Label>
+        <Label
+            Grid.Row="2"
+            Grid.Column="0"
+            Margin="2"
+            Target="fieldTTL">
+            TTL
+        </Label>
+        <NumericUpDown
+            Name="fieldTTL"
+            Grid.Row="2"
+            Grid.Column="1"
+            Margin="2"
+            ClipValueToMinMax="True"
+            Maximum="20"
+            Minimum="-1"
+            ParsingNumberStyle="Integer"
+            Value="{Binding Ttl}" />
+        <Label
+            Grid.Row="2"
+            Grid.Column="2"
+            Margin="2"
+            Target="fieldTTL">
+            hops
+        </Label>
 
-		<Label Target="fieldTimeout" Grid.Row="3" Grid.Column="0" Margin="2">Timeout</Label>
-		<NumericUpDown Name="fieldTimeout" Value="{Binding Timeout}" ClipValueToMinMax="True" ParsingNumberStyle="Integer" Minimum="10" Maximum="10000" Grid.Row="3" Grid.Column="1" Margin="2" Increment="10"></NumericUpDown>
-		<Label Target="fieldTimeout" Grid.Row="3" Grid.Column="2" Margin="2">ms</Label>
+        <Label
+            Grid.Row="3"
+            Grid.Column="0"
+            Margin="2"
+            Target="fieldTimeout">
+            Timeout
+        </Label>
+        <NumericUpDown
+            Name="fieldTimeout"
+            Grid.Row="3"
+            Grid.Column="1"
+            Margin="2"
+            ClipValueToMinMax="True"
+            Increment="10"
+            Maximum="10000"
+            Minimum="10"
+            ParsingNumberStyle="Integer"
+            Value="{Binding Timeout}" />
+        <Label
+            Grid.Row="3"
+            Grid.Column="2"
+            Margin="2"
+            Target="fieldTimeout">
+            ms
+        </Label>
 
-		<Label Target="fieldRetries" Grid.Row="4" Grid.Column="0" Margin="2">Retries</Label>
-		<NumericUpDown Name="fieldRetries" Value="{Binding Retries}" ClipValueToMinMax="True" ParsingNumberStyle="Integer" Minimum="0" Maximum="20" Grid.Row="4" Grid.Column="1" Margin="2"></NumericUpDown>
-		<Label Target="fieldRetries" Grid.Row="4" Grid.Column="2" Margin="2">times</Label>
-		
-		<StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="4" Margin="2">
-			<Button IsDefault="True" Command="{Binding CommandOK}">OK</Button>
-			<Button IsCancel="True" Command="{Binding CommandCancel}">Cancel</Button>
-		</StackPanel>
-	</Grid>
+        <Label
+            Grid.Row="4"
+            Grid.Column="0"
+            Margin="2"
+            Target="fieldRetries">
+            Retries
+        </Label>
+        <NumericUpDown
+            Name="fieldRetries"
+            Grid.Row="4"
+            Grid.Column="1"
+            Margin="2"
+            ClipValueToMinMax="True"
+            Maximum="20"
+            Minimum="0"
+            ParsingNumberStyle="Integer"
+            Value="{Binding Retries}" />
+        <Label
+            Grid.Row="4"
+            Grid.Column="2"
+            Margin="2"
+            Target="fieldRetries">
+            times
+        </Label>
+
+        <StackPanel
+            Grid.Row="5"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            Margin="2"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal"
+            Spacing="4">
+            <Button Command="{Binding CommandOK}" IsDefault="True">OK</Button>
+            <Button Command="{Binding CommandCancel}" IsCancel="True">Cancel</Button>
+        </StackPanel>
+    </Grid>
 </Window>
