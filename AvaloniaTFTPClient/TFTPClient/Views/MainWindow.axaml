@@ -26,6 +26,7 @@
 			<RowDefinition Height="Auto"></RowDefinition>
 			<RowDefinition Height="Auto"></RowDefinition>
 			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="*"></RowDefinition>
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -53,7 +54,7 @@
 
 		<Label Target="fieldLocalFile" Grid.Row="5" Grid.Column="0" Margin="2">Local file</Label>
 		<TextBox Name="fieldLocalFile" Grid.Row="5" Grid.Column="1" Margin="2" Text="{CompiledBinding LocalFile}"/>
-		<Button Grid.Row="5" Grid.Column="2" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" Command="{CompiledBinding CommandSelectFile}" ToolTip.Tip="Select file">...</Button>
+		<Button Grid.Row="5" Grid.Column="2" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Command="{CompiledBinding CommandSelectFile}" ToolTip.Tip="Select file">...</Button>
 
 		<StackPanel Margin="2" Spacing="2" Grid.Column="6" Grid.RowSpan="7">
 			<Button Command="{CompiledBinding CommandSettings}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">_Settings</Button>
