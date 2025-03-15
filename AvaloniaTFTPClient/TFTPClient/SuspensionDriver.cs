@@ -29,7 +29,7 @@ public class SuspensionDriver(string applicationName)
             using var stream = File.OpenRead(StatePath);
             var state = JsonSerializer.Deserialize<MySavedState>(stream);
 
-            if (state != null)
+            if(state != null)
             {
                 return new MainWindowViewModel()
                 {

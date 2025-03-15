@@ -23,7 +23,7 @@ public partial class SettingsWindow : Window
     protected override void OnOpened(EventArgs e)
     {
         base.OnOpened(e);
-        if (DataContext is SettingsWindowViewModel viewModel)
+        if(DataContext is SettingsWindowViewModel viewModel)
         {
             viewModel.InteractionOnClose = x => Close(x);
         }

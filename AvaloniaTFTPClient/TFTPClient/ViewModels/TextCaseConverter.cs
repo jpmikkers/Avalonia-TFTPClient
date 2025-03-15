@@ -12,7 +12,7 @@ public class TextCaseConverter : IValueConverter
 
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if (value is int sourceNumber && targetType.IsAssignableTo(typeof(string)))
+        if(value is int sourceNumber && targetType.IsAssignableTo(typeof(string)))
         {
             return sourceNumber.ToString();
         }
@@ -22,10 +22,10 @@ public class TextCaseConverter : IValueConverter
 
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if (value is string sourceText && targetType.IsAssignableTo(typeof(int)))
+        if(value is string sourceText && targetType.IsAssignableTo(typeof(int)))
         {
             var filtered = string.Join("", sourceText.Where(c => Char.IsDigit(c)).Select(c => new string(c, 1)));
-            if (int.TryParse(filtered, out var actualValue))
+            if(int.TryParse(filtered, out var actualValue))
             {
                 return actualValue;
             }

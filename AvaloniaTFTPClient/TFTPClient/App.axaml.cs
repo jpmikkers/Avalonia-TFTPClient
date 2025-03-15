@@ -18,7 +18,7 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        if(ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             // Line below is needed to remove Avalonia data validation.
             // Without this line you will get duplicate validations from both Avalonia and CT
@@ -39,9 +39,9 @@ public partial class App : Application
 
     private void Desktop_ShutdownRequested(object? sender, ShutdownRequestedEventArgs e)
     {
-        if (sender is IClassicDesktopStyleApplicationLifetime desktop)
+        if(sender is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            if (desktop.MainWindow?.DataContext is MainWindowViewModel vm)
+            if(desktop.MainWindow?.DataContext is MainWindowViewModel vm)
             {
                 suspensionDriver.SaveState(vm);
             }

@@ -18,5 +18,5 @@ internal class Program
         => AppBuilder.Configure<App>()
             .UsePlatformDetect()
             .LogToTrace();
-            //.UseManagedSystemDialogs()
+    //.UseManagedSystemDialogs()
 }

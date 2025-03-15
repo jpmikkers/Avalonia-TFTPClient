@@ -18,7 +18,7 @@ public partial class MainWindow : Window
     protected override void OnOpened(EventArgs e)
     {
         base.OnOpened(e);
-        if (DataContext is MainWindowViewModel viewModel)
+        if(DataContext is MainWindowViewModel viewModel)
         {
             viewModel.InteractionOpenFile = DoShowOpenFileDialogAsync;
             viewModel.InteractionSaveFile = DoShowSaveFileDialogAsync;
@@ -48,10 +48,11 @@ public partial class MainWindow : Window
     private async Task<string?> DoShowOpenFileDialogAsync()
     {
         var files = await StorageProvider.OpenFilePickerAsync(
-            new FilePickerOpenOptions { 
-                AllowMultiple = false, 
+            new FilePickerOpenOptions
+            {
+                AllowMultiple = false,
                 FileTypeFilter = new[] { FilePickerFileTypes.All },
-                Title = "Select file to upload.." 
+                Title = "Select file to upload.."
             }
         );
 
@@ -61,7 +62,8 @@ public partial class MainWindow : Window
     private async Task<string?> DoShowSaveFileDialogAsync()
     {
         var file = await StorageProvider.SaveFilePickerAsync(
-            new FilePickerSaveOptions { 
+            new FilePickerSaveOptions
+            {
                 ShowOverwritePrompt = true,     // doesn't work most of the time for managed mode..
                 Title = "Save file as..",
                 FileTypeChoices = [FilePickerFileTypes.All]
