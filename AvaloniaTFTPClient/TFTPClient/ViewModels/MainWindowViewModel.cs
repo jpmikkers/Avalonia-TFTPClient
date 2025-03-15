@@ -9,7 +9,6 @@ using System.ComponentModel.DataAnnotations;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
 
 namespace UIClient.ViewModels;
 
@@ -71,7 +70,7 @@ public partial class MainWindowViewModel : ObservableValidator
     {
         if(IsAutoGenerateNames)
         {
-            RemoteFile = Path.Combine(_remoteDir, Path.GetFileName(_localFile));
+            RemoteFile = Path.Combine(RemoteDir, Path.GetFileName(LocalFile));
         }
     }
 
@@ -149,7 +148,7 @@ public partial class MainWindowViewModel : ObservableValidator
         // nested functions are cool
         static int ParseIntDefault(string str, int def)
         {
-            return int.TryParse(str, out int val) ? val : def;
+            return int.TryParse(str, out var val) ? val : def;
         }
 
         IPEndPoint? result = null;
@@ -157,23 +156,30 @@ public partial class MainWindowViewModel : ObservableValidator
         int port = 69;
 
         // attempt to parse it as a ipv6 address
-        var parts = server.Split(new string[] { "[", "]:" }, StringSplitOptions.RemoveEmptyEntries);
+        var parts = server.Split(["[", "]:"], StringSplitOptions.RemoveEmptyEntries);
 
         if(parts.Length > 0 && IPAddress.TryParse(parts[0], out address))
         {
-            if(parts.Length > 1) port = ParseIntDefault(parts[1], 69);
+            if(parts.Length > 1)
+            {
+                port = ParseIntDefault(parts[1], 69);
+            }
+
             result = new IPEndPoint(address, port);
         }
         else
         {
             // no luck, try it as a ipv4 address
-            parts = server.Split(new string[] { ":" }, StringSplitOptions.RemoveEmptyEntries);
+            parts = server.Split([":"], StringSplitOptions.RemoveEmptyEntries);
 
             if(parts.Length > 0)
             {
-                if(parts.Length > 1) port = ParseIntDefault(parts[1], 69);
+                if(parts.Length > 1)
+                {
+                    port = ParseIntDefault(parts[1], 69);
+                }
 
-                if(IPAddress.TryParse(parts[0], out address))
+                if (IPAddress.TryParse(parts[0], out address))
                 {
                     result = new IPEndPoint(address, port);
                 }
@@ -242,6 +248,6 @@ public partial class MainWindowViewModel : ObservableValidator
 
     public MainWindowViewModel() : base() 
     {
-        this.ValidateAllProperties();
+        ValidateAllProperties();
     }
 }

@@ -45,11 +45,11 @@ public partial class SettingsWindowViewModel : ViewModelBase
     {
         InteractionOnClose(new TFTPClient.Settings
         {
-            BlockSize = _blockSize,
-            DontFragment = _dontFragment,
-            Retries = _retries,
-            ResponseTimeout = TimeSpan.FromMilliseconds(_timeout),
-            Ttl = (short)_ttl
+            BlockSize = BlockSize,
+            DontFragment = DontFragment,
+            Retries = Retries,
+            ResponseTimeout = TimeSpan.FromMilliseconds(Timeout),
+            Ttl = (short)Ttl
         });
     }
 

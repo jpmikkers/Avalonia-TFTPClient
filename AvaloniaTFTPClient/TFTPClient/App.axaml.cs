@@ -5,7 +5,6 @@ using UIClient.ViewModels;
 using UIClient.Views;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
-//using DynamicData;
 namespace UIClient;
 
 public partial class App : Application

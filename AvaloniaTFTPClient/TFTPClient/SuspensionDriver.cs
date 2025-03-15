@@ -6,6 +6,8 @@ namespace UIClient;
 
 public class SuspensionDriver(string applicationName)
 {
+    private JsonSerializerOptions jsonSerializerOptions = new() { WriteIndented = true };
+
     private string GetLocalApplicationFolder()
     {
         var result = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.Create), applicationName);
@@ -24,23 +26,21 @@ public class SuspensionDriver(string applicationName)
     {
         try
         {
-            using(var stream = File.OpenRead(StatePath))
-            {
-                var state = JsonSerializer.Deserialize<MySavedState>(stream);
+            using var stream = File.OpenRead(StatePath);
+            var state = JsonSerializer.Deserialize<MySavedState>(stream);
 
-                if(state != null)
+            if (state != null)
+            {
+                return new MainWindowViewModel()
                 {
-                    return new MainWindowViewModel()
-                    {
-                        IsAutoGenerateNames = state.IsAutoGenerateNames,
-                        IsDownload = state.IsDownload,
-                        Server = state.Server,
-                        RemoteDir = state.RemoteDir,
-                        LocalFile = state.LocalFile,
-                        RemoteFile = state.RemoteFile,
-                        Settings = state.Settings.ToTFTPSettings()
-                    };
-                }
+                    IsAutoGenerateNames = state.IsAutoGenerateNames,
+                    IsDownload = state.IsDownload,
+                    Server = state.Server,
+                    RemoteDir = state.RemoteDir,
+                    LocalFile = state.LocalFile,
+                    RemoteFile = state.RemoteFile,
+                    Settings = state.Settings.ToTFTPSettings()
+                };
             }
         }
         catch
@@ -55,21 +55,20 @@ public class SuspensionDriver(string applicationName)
         {
             if(state is MainWindowViewModel viewModel)
             {
-                using(var stream = File.Create(StatePath))
-                {
-                    JsonSerializer.Serialize(stream,
-                        new MySavedState
-                        {
-                            Server = viewModel.Server,
-                            IsDownload = viewModel.IsDownload,
-                            LocalFile = viewModel.LocalFile,
-                            RemoteFile = viewModel.RemoteFile,
-                            RemoteDir = viewModel.RemoteDir,
-                            IsAutoGenerateNames = viewModel.IsAutoGenerateNames,
-                            Settings = MySavedSettings.FromTFTPSettings(viewModel.Settings)
-                        },
-                        new JsonSerializerOptions { WriteIndented = true });
-                }
+                using var stream = File.Create(StatePath);
+                jsonSerializerOptions = new JsonSerializerOptions { WriteIndented = true };
+                JsonSerializer.Serialize(stream,
+                    new MySavedState
+                    {
+                        Server = viewModel.Server,
+                        IsDownload = viewModel.IsDownload,
+                        LocalFile = viewModel.LocalFile,
+                        RemoteFile = viewModel.RemoteFile,
+                        RemoteDir = viewModel.RemoteDir,
+                        IsAutoGenerateNames = viewModel.IsAutoGenerateNames,
+                        Settings = MySavedSettings.FromTFTPSettings(viewModel.Settings)
+                    },
+                    jsonSerializerOptions);
             }
         }
         catch
