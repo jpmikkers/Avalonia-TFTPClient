@@ -1,18 +1,15 @@
 using Avalonia;
 using Avalonia.Markup.Xaml;
-using Avalonia.ReactiveUI;
 using UIClient.ViewModels;
-using ReactiveUI;
 using System;
+using Avalonia.Controls;
 namespace UIClient.Views;
 
-public partial class SettingsWindow : ReactiveWindow<SettingsWindowViewModel>
+public partial class SettingsWindow : Window
 {
     public SettingsWindow()
     {
         InitializeComponent();
-        this.WhenActivated(d => d(ViewModel!.CommandOK.Subscribe(Close)));
-        this.WhenActivated(d => d(ViewModel!.CommandCancel.Subscribe(Close)));
 #if DEBUG
         this.AttachDevTools();
 #endif
@@ -21,5 +18,14 @@ public partial class SettingsWindow : ReactiveWindow<SettingsWindowViewModel>
     private void InitializeComponent()
     {
         AvaloniaXamlLoader.Load(this);
+    }
+
+    protected override void OnOpened(EventArgs e)
+    {
+        base.OnOpened(e);
+        if (DataContext is SettingsWindowViewModel viewModel)
+        {
+            viewModel.InteractionOnClose = x => Close(x);
+        }
     }
 }

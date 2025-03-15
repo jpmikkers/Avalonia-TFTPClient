@@ -1,19 +1,14 @@
-﻿using ReactiveUI;
-using System;
-using System.Reactive;
-using System.Reactive.Linq;
+﻿using System;
 using UIClient.ViewModels;
 using System.Text.Json;
 using System.IO;
 namespace UIClient;
 
-public class SuspensionDriver : ISuspensionDriver
+public class SuspensionDriver(string applicationName)
 {
-    string ApplicationName = "AvaloniaTFTPClient";
-
     private string GetLocalApplicationFolder()
     {
-        var result = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.Create), ApplicationName);
+        var result = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.Create), applicationName);
         if(!Directory.Exists(result))
         {
             Directory.CreateDirectory(result);
@@ -25,12 +20,7 @@ public class SuspensionDriver : ISuspensionDriver
     // on windows: %LocalAppData%\AvaloniaTFTPClient\State.json
     private string StatePath => Path.Combine(GetLocalApplicationFolder(), "State.json");
 
-    public IObservable<Unit> InvalidateState()
-    {
-        return Observable.Return(Unit.Default);
-    }
-
-    public IObservable<object> LoadState()
+    public MainWindowViewModel LoadState()
     {
         try
         {
@@ -40,7 +30,7 @@ public class SuspensionDriver : ISuspensionDriver
 
                 if(state != null)
                 {
-                    return Observable.Return(new MainWindowViewModel()
+                    return new MainWindowViewModel()
                     {
                         IsAutoGenerateNames = state.IsAutoGenerateNames,
                         IsDownload = state.IsDownload,
@@ -49,17 +39,17 @@ public class SuspensionDriver : ISuspensionDriver
                         LocalFile = state.LocalFile,
                         RemoteFile = state.RemoteFile,
                         Settings = state.Settings.ToTFTPSettings()
-                    });
+                    };
                 }
             }
         }
         catch
         {
         }
-        return Observable.Return(new MainWindowViewModel());
+        return new MainWindowViewModel();
     }
 
-    public IObservable<Unit> SaveState(object state)
+    public void SaveState(MainWindowViewModel state)
     {
         try
         {
@@ -85,6 +75,5 @@ public class SuspensionDriver : ISuspensionDriver
         catch
         {
         }
-        return Observable.Return(Unit.Default);
     }
 }

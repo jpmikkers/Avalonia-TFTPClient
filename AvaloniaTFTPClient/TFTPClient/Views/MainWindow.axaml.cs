@@ -1,40 +1,51 @@
-using Avalonia.ReactiveUI;
 using UIClient.ViewModels;
-using ReactiveUI;
-using System.Reactive;
 using System.Threading.Tasks;
 using Baksteen.Net.TFTP.Client;
 using Avalonia.Platform.Storage;
+using Avalonia.Controls;
+using System;
+using System.Linq;
 namespace UIClient.Views;
 
-public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
+public partial class MainWindow : Window
 {
     public MainWindow()
     {
         InitializeComponent();
-        this.WhenActivated(d => d(ViewModel!.InteractionOpenFile.RegisterHandler(DoShowOpenFileDialogAsync)));
-        this.WhenActivated(d => d(ViewModel!.InteractionSaveFile.RegisterHandler(DoShowSaveFileDialogAsync)));
-        this.WhenActivated(d => d(ViewModel!.InteractionShowError.RegisterHandler(DoShowErrorAsync)));
-        this.WhenActivated(d => d(ViewModel!.InteractionShowSettings.RegisterHandler(DoShowSettingsAsync)));
         //this.Title = $"{Assembly.GetEntryAssembly()!.GetName().Version}";
     }
 
-    private async Task DoShowErrorAsync(InteractionContext<string, Unit> ic)
+    protected override void OnOpened(EventArgs e)
     {
-        var messageBoxStandardWindow = MsBox.Avalonia.MessageBoxManager.GetMessageBoxStandard("Error", ic.Input);
-        await messageBoxStandardWindow.ShowWindowDialogAsync(this);
-        ic.SetOutput(Unit.Default);
+        base.OnOpened(e);
+        if (DataContext is MainWindowViewModel viewModel)
+        {
+            viewModel.InteractionOpenFile = DoShowOpenFileDialogAsync;
+            viewModel.InteractionSaveFile = DoShowSaveFileDialogAsync;
+            viewModel.InteractionShowError = DoShowErrorAsync;
+            viewModel.InteractionShowSettings = DoShowSettingsAsync;
+        }
     }
 
-    private async Task DoShowSettingsAsync(InteractionContext<SettingsWindowViewModel, TFTPClient.Settings?> ic)
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+
+    private async Task DoShowErrorAsync(string msg)
+    {
+        var messageBoxStandardWindow = MsBox.Avalonia.MessageBoxManager.GetMessageBoxStandard("Error", msg);
+        await messageBoxStandardWindow.ShowWindowDialogAsync(this);
+    }
+
+    private async Task<TFTPClient.Settings?> DoShowSettingsAsync(TFTPClient.Settings settings)
     {
         var dialog = new SettingsWindow();
-        dialog.DataContext = ic.Input;
-        var result = await dialog.ShowDialog<TFTPClient.Settings?>(this);
-        ic.SetOutput(result);
+        dialog.DataContext = new SettingsWindowViewModel(settings);
+        return await dialog.ShowDialog<TFTPClient.Settings?>(this);
     }
 
-    private async Task DoShowOpenFileDialogAsync(InteractionContext<Unit,string?> ic)
+    private async Task<string?> DoShowOpenFileDialogAsync()
     {
         var files = await StorageProvider.OpenFilePickerAsync(
             new FilePickerOpenOptions { 
@@ -44,33 +55,19 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
             }
         );
 
-        if(files.Count > 0)
-        {
-            ic.SetOutput(files[0].Path.LocalPath);
-        }
-        else
-        {
-            ic.SetOutput(null);
-        }
+        return files.FirstOrDefault()?.TryGetLocalPath();
     }
 
-    private async Task DoShowSaveFileDialogAsync(InteractionContext<Unit, string?> ic)
+    private async Task<string?> DoShowSaveFileDialogAsync()
     {
         var file = await StorageProvider.SaveFilePickerAsync(
             new FilePickerSaveOptions { 
                 ShowOverwritePrompt = true,     // doesn't work most of the time for managed mode..
                 Title = "Save file as..",
-                FileTypeChoices = new[] { FilePickerFileTypes.All }
+                FileTypeChoices = [FilePickerFileTypes.All]
             }
         );
 
-        if(file != null)
-        {
-            ic.SetOutput(file.Path.LocalPath);
-        }
-        else
-        {
-            ic.SetOutput(null);
-        }
+        return file?.Path.LocalPath;
     }
 }

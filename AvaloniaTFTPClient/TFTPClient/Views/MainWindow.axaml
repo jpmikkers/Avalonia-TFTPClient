@@ -54,11 +54,11 @@
 
 		<Label Target="fieldLocalFile" Grid.Row="5" Grid.Column="0" Margin="2">Local file</Label>
 		<TextBox Name="fieldLocalFile" Grid.Row="5" Grid.Column="1" Margin="2" Text="{CompiledBinding LocalFile}"/>
-		<Button Grid.Row="5" Grid.Column="2" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Command="{CompiledBinding CommandSelectFile}" ToolTip.Tip="Select file">...</Button>
+		<Button Grid.Row="5" Grid.Column="2" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Command="{CompiledBinding DoSelectFileCommand}" ToolTip.Tip="Select file">...</Button>
 
 		<StackPanel Margin="2" Spacing="2" Grid.Column="6" Grid.RowSpan="7">
-			<Button Command="{CompiledBinding CommandSettings}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">_Settings</Button>
-			<Button Margin="0 2 0 0" Command="{CompiledBinding CommandDownloadUpload}" DockPanel.Dock="Bottom" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">_Go</Button>
+			<Button Command="{CompiledBinding DoSettingsCommand}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">_Settings</Button>
+			<Button Margin="0 2 0 0" Command="{CompiledBinding DoDownloadUploadCommand}" DockPanel.Dock="Bottom" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">_Go</Button>
 		</StackPanel>
 		
 		<StackPanel Orientation="Horizontal" Grid.Row="6" Grid.ColumnSpan="4" Margin="2">

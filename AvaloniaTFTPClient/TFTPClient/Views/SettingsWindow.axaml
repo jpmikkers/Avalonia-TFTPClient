@@ -167,8 +167,8 @@
             HorizontalAlignment="Right"
             Orientation="Horizontal"
             Spacing="4">
-            <Button Command="{Binding CommandOK}" IsDefault="True">OK</Button>
-            <Button Command="{Binding CommandCancel}" IsCancel="True">Cancel</Button>
+            <Button Command="{Binding OkayCommand}" IsDefault="True">OK</Button>
+            <Button Command="{Binding CancelCommand}" IsCancel="True">Cancel</Button>
         </StackPanel>
     </Grid>
 </Window>
