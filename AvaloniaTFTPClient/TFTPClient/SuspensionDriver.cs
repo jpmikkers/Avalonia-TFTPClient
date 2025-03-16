@@ -31,7 +31,7 @@ public class SuspensionDriver(string applicationName)
 
             if(state != null)
             {
-                return new MainWindowViewModel()
+                return new()
                 {
                     IsAutoGenerateNames = state.IsAutoGenerateNames,
                     IsDownload = state.IsDownload,
@@ -49,27 +49,24 @@ public class SuspensionDriver(string applicationName)
         return new MainWindowViewModel();
     }
 
-    public void SaveState(MainWindowViewModel state)
+    public void SaveState(MainWindowViewModel vm)
     {
         try
         {
-            if(state is MainWindowViewModel viewModel)
-            {
-                using var stream = File.Create(StatePath);
-                jsonSerializerOptions = new JsonSerializerOptions { WriteIndented = true };
-                JsonSerializer.Serialize(stream,
-                    new MySavedState
-                    {
-                        Server = viewModel.Server,
-                        IsDownload = viewModel.IsDownload,
-                        LocalFile = viewModel.LocalFile,
-                        RemoteFile = viewModel.RemoteFile,
-                        RemoteDir = viewModel.RemoteDir,
-                        IsAutoGenerateNames = viewModel.IsAutoGenerateNames,
-                        Settings = MySavedSettings.FromTFTPSettings(viewModel.Settings)
-                    },
-                    jsonSerializerOptions);
-            }
+            using var stream = File.Create(StatePath);
+            jsonSerializerOptions = new JsonSerializerOptions { WriteIndented = true };
+            JsonSerializer.Serialize(stream,
+                new MySavedState
+                {
+                    Server = vm.Server,
+                    IsDownload = vm.IsDownload,
+                    LocalFile = vm.LocalFile,
+                    RemoteFile = vm.RemoteFile,
+                    RemoteDir = vm.RemoteDir,
+                    IsAutoGenerateNames = vm.IsAutoGenerateNames,
+                    Settings = MySavedSettings.FromTFTPSettings(vm.Settings)
+                },
+                jsonSerializerOptions);
         }
         catch
         {
