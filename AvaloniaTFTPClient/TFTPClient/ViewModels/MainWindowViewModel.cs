@@ -64,7 +64,7 @@ public partial class MainWindowViewModel : ObservableValidator
     public Func<TFTPClient.Settings, Task<TFTPClient.Settings?>> InteractionShowSettings { get; set; } = _ => Task.FromResult<TFTPClient.Settings?>(null);
     public Func<Task<string?>> InteractionSaveFile { get; set; } = () => Task.FromResult<string?>(null);
 
-    public Func<string, Task> InteractionShowError { get; set; } = _ => Task.CompletedTask;
+    public Func<Exception, Task> InteractionShowError { get; set; } = _ => Task.CompletedTask;
 
     private void GenerateRemoteFile()
     {
@@ -81,14 +81,12 @@ public partial class MainWindowViewModel : ObservableValidator
         {
             if(string.IsNullOrWhiteSpace(LocalFile))
             {
-                await InteractionShowError("Please enter a valid local filename");
-                return;
+                throw new ValidationException("Please enter a valid local filename");
             }
 
             if(string.IsNullOrWhiteSpace(RemoteFile))
             {
-                await InteractionShowError("Please enter a valid remote filename");
-                return;
+                throw new ValidationException("Please enter a valid remote filename");
             }
 
             Progress = 0.0;
@@ -129,6 +127,7 @@ public partial class MainWindowViewModel : ObservableValidator
         catch(Exception ex)
         {
             Status = $"Error: '{ex.Message}'";
+            await InteractionShowError(ex);
         }
     }
 

@@ -15,9 +15,9 @@ public partial class MainWindow : Window
         //this.Title = $"{Assembly.GetEntryAssembly()!.GetName().Version}";
     }
 
-    protected override void OnOpened(EventArgs e)
+    protected override void OnDataContextChanged(EventArgs e)
     {
-        base.OnOpened(e);
+        base.OnDataContextChanged(e);
         if(DataContext is MainWindowViewModel viewModel)
         {
             viewModel.InteractionOpenFile = DoShowOpenFileDialogAsync;
@@ -27,22 +27,30 @@ public partial class MainWindow : Window
         }
     }
 
-    protected override void OnInitialized()
+    private async Task DoShowErrorAsync(Exception ex)
     {
-        base.OnInitialized();
-    }
-
-    private async Task DoShowErrorAsync(string msg)
-    {
-        var messageBoxStandardWindow = MsBox.Avalonia.MessageBoxManager.GetMessageBoxStandard("Error", msg);
-        await messageBoxStandardWindow.ShowWindowDialogAsync(this);
+        var dialog = new ErrorWindow() 
+        {
+            DataContext = new ErrorWindowViewModel 
+            {
+                Details = ex.ToString(), 
+                Message = ex.Message, 
+                Title = "TFTPClient Error" 
+            } 
+        };
+        await dialog.ShowDialog(this);
     }
 
     private async Task<TFTPClient.Settings?> DoShowSettingsAsync(TFTPClient.Settings settings)
     {
-        var dialog = new SettingsWindow();
-        dialog.DataContext = new SettingsWindowViewModel(settings);
-        return await dialog.ShowDialog<TFTPClient.Settings?>(this);
+        var dialog = new SettingsWindow
+        {
+            DataContext = new SettingsWindowViewModel() 
+            { 
+                Settings = settings 
+            }
+        };
+        return (await dialog.ShowDialog<SettingsWindowViewModel?>(this))?.Settings;
     }
 
     private async Task<string?> DoShowOpenFileDialogAsync()

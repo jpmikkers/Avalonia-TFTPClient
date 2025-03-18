@@ -2,6 +2,7 @@
 using Baksteen.Net.TFTP.Client;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using static Baksteen.Net.TFTP.Client.TFTPClient;
 
 namespace UIClient.ViewModels;
 
@@ -22,17 +23,11 @@ public partial class SettingsWindowViewModel : ViewModelBase
     [ObservableProperty]
     private bool _dontFragment;
 
-    public Action<TFTPClient.Settings?> InteractionOnClose = x => { };
-
     public SettingsWindowViewModel(TFTPClient.Settings? settings)
     {
-        if(settings != null)
+        if(settings is not null)
         {
-            _dontFragment = settings.DontFragment;
-            _blockSize = settings.BlockSize;
-            _retries = settings.Retries;
-            _timeout = (int)settings.ResponseTimeout.TotalMilliseconds;
-            _ttl = settings.Ttl;
+            Settings = settings;
         }
     }
 
@@ -40,22 +35,22 @@ public partial class SettingsWindowViewModel : ViewModelBase
     {
     }
 
-    [RelayCommand]
-    private void Okay()
-    {
-        InteractionOnClose(new TFTPClient.Settings
+    public TFTPClient.Settings Settings {
+        get => new()
         {
             BlockSize = BlockSize,
             DontFragment = DontFragment,
             Retries = Retries,
             ResponseTimeout = TimeSpan.FromMilliseconds(Timeout),
             Ttl = (short)Ttl
-        });
-    }
+        };
 
-    [RelayCommand]
-    private void Cancel()
-    {
-        InteractionOnClose(null);
+        set {
+            DontFragment = value.DontFragment;
+            BlockSize = value.BlockSize;
+            Retries = value.Retries;
+            Timeout = (int)value.ResponseTimeout.TotalMilliseconds;
+            Ttl = value.Ttl;
+        }
     }
 }

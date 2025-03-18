@@ -22,8 +22,12 @@ public partial class App : Application
         {
             // Line below is needed to remove Avalonia data validation.
             // Without this line you will get duplicate validations from both Avalonia and CT
-            // TODO: BindingPlugins.DataValidators.RemoveMany(BindingPlugins.DataValidators.Where(x => x is DataAnnotationsValidationPlugin).ToList());
-            //BindingPlugins.DataValidators.RemoveAll(x => x is DataAnnotationsValidationPlugin);
+
+            foreach(var validator in BindingPlugins.DataValidators.Where(x => x is DataAnnotationsValidationPlugin).ToList())
+            {
+                BindingPlugins.DataValidators.Remove(validator);
+            }
+
             //desktop.MainWindow = AppHost!.Services.GetRequiredService<MainWindow>();
 
             desktop.MainWindow = new MainWindow
