@@ -6,10 +6,10 @@ public class MySavedState
 {
     public bool IsDownload { get; set; } = true;
     public bool IsAutoGenerateNames { get; set; }
-    public string Server { get; set; } = String.Empty;
-    public string RemoteFile { get; set; } = String.Empty;
-    public string RemoteDir { get; set; } = String.Empty;
-    public string LocalFile { get; set; } = String.Empty;
+    public string Server { get; set; } = string.Empty;
+    public string RemoteFile { get; set; } = string.Empty;
+    public string RemoteDir { get; set; } = string.Empty;
+    public string LocalFile { get; set; } = string.Empty;
     public MySavedSettings Settings { get; set; } = MySavedSettings.FromTFTPSettings(new TFTPClient.Settings());
 }
 

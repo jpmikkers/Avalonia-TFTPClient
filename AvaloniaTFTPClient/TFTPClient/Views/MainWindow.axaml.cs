@@ -1,76 +1,83 @@
-using Avalonia.ReactiveUI;
 using UIClient.ViewModels;
-using ReactiveUI;
-using System.Reactive;
 using System.Threading.Tasks;
 using Baksteen.Net.TFTP.Client;
 using Avalonia.Platform.Storage;
+using Avalonia.Controls;
+using System;
+using System.Linq;
 namespace UIClient.Views;
 
-public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
+public partial class MainWindow : Window
 {
     public MainWindow()
     {
         InitializeComponent();
-        this.WhenActivated(d => d(ViewModel!.InteractionOpenFile.RegisterHandler(DoShowOpenFileDialogAsync)));
-        this.WhenActivated(d => d(ViewModel!.InteractionSaveFile.RegisterHandler(DoShowSaveFileDialogAsync)));
-        this.WhenActivated(d => d(ViewModel!.InteractionShowError.RegisterHandler(DoShowErrorAsync)));
-        this.WhenActivated(d => d(ViewModel!.InteractionShowSettings.RegisterHandler(DoShowSettingsAsync)));
         //this.Title = $"{Assembly.GetEntryAssembly()!.GetName().Version}";
     }
 
-    private async Task DoShowErrorAsync(InteractionContext<string, Unit> ic)
+    protected override void OnDataContextChanged(EventArgs e)
     {
-        var messageBoxStandardWindow = MsBox.Avalonia.MessageBoxManager.GetMessageBoxStandard("Error", ic.Input);
-        await messageBoxStandardWindow.ShowWindowDialogAsync(this);
-        ic.SetOutput(Unit.Default);
+        base.OnDataContextChanged(e);
+        if(DataContext is MainWindowViewModel viewModel)
+        {
+            viewModel.InteractionOpenFile = DoShowOpenFileDialogAsync;
+            viewModel.InteractionSaveFile = DoShowSaveFileDialogAsync;
+            viewModel.InteractionShowError = DoShowErrorAsync;
+            viewModel.InteractionShowSettings = DoShowSettingsAsync;
+        }
     }
 
-    private async Task DoShowSettingsAsync(InteractionContext<SettingsWindowViewModel, TFTPClient.Settings?> ic)
+    private async Task DoShowErrorAsync(Exception ex)
     {
-        var dialog = new SettingsWindow();
-        dialog.DataContext = ic.Input;
-        var result = await dialog.ShowDialog<TFTPClient.Settings?>(this);
-        ic.SetOutput(result);
+        var dialog = new ErrorWindow() 
+        {
+            DataContext = new ErrorWindowViewModel 
+            {
+                Details = ex.ToString(), 
+                Message = ex.Message, 
+                Title = "TFTPClient Error" 
+            } 
+        };
+        await dialog.ShowDialog(this);
     }
 
-    private async Task DoShowOpenFileDialogAsync(InteractionContext<Unit,string?> ic)
+    private async Task<TFTPClient.Settings?> DoShowSettingsAsync(TFTPClient.Settings settings)
+    {
+        var dialog = new SettingsWindow
+        {
+            DataContext = new SettingsWindowViewModel() 
+            { 
+                Settings = settings 
+            }
+        };
+        return (await dialog.ShowDialog<SettingsWindowViewModel?>(this))?.Settings;
+    }
+
+    private async Task<string?> DoShowOpenFileDialogAsync()
     {
         var files = await StorageProvider.OpenFilePickerAsync(
-            new FilePickerOpenOptions { 
-                AllowMultiple = false, 
+            new FilePickerOpenOptions
+            {
+                AllowMultiple = false,
                 FileTypeFilter = new[] { FilePickerFileTypes.All },
-                Title = "Select file to upload.." 
+                Title = "Select file to upload.."
             }
         );
 
-        if(files.Count > 0)
-        {
-            ic.SetOutput(files[0].Path.LocalPath);
-        }
-        else
-        {
-            ic.SetOutput(null);
-        }
+        return files.FirstOrDefault()?.TryGetLocalPath();
     }
 
-    private async Task DoShowSaveFileDialogAsync(InteractionContext<Unit, string?> ic)
+    private async Task<string?> DoShowSaveFileDialogAsync()
     {
         var file = await StorageProvider.SaveFilePickerAsync(
-            new FilePickerSaveOptions { 
+            new FilePickerSaveOptions
+            {
                 ShowOverwritePrompt = true,     // doesn't work most of the time for managed mode..
                 Title = "Save file as..",
-                FileTypeChoices = new[] { FilePickerFileTypes.All }
+                FileTypeChoices = [FilePickerFileTypes.All]
             }
         );
 
-        if(file != null)
-        {
-            ic.SetOutput(file.Path.LocalPath);
-        }
-        else
-        {
-            ic.SetOutput(null);
-        }
+        return file?.Path.LocalPath;
     }
 }

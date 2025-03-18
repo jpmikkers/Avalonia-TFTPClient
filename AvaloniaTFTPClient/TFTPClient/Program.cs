@@ -1,7 +1,6 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Dialogs;
-using Avalonia.ReactiveUI;
 using System;
 namespace UIClient;
 
@@ -18,7 +17,6 @@ internal class Program
     public static AppBuilder BuildAvaloniaApp()
         => AppBuilder.Configure<App>()
             .UsePlatformDetect()
-            .LogToTrace()
-            //.UseManagedSystemDialogs()
-            .UseReactiveUI();
+            .LogToTrace();
+    //.UseManagedSystemDialogs()
 }

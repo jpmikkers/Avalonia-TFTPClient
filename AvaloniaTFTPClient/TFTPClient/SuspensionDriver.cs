@@ -1,19 +1,16 @@
-﻿using ReactiveUI;
-using System;
-using System.Reactive;
-using System.Reactive.Linq;
+﻿using System;
 using UIClient.ViewModels;
 using System.Text.Json;
 using System.IO;
 namespace UIClient;
 
-public class SuspensionDriver : ISuspensionDriver
+public class SuspensionDriver(string applicationName)
 {
-    string ApplicationName = "AvaloniaTFTPClient";
+    private JsonSerializerOptions jsonSerializerOptions = new() { WriteIndented = true };
 
     private string GetLocalApplicationFolder()
     {
-        var result = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.Create), ApplicationName);
+        var result = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.Create), applicationName);
         if(!Directory.Exists(result))
         {
             Directory.CreateDirectory(result);
@@ -25,66 +22,54 @@ public class SuspensionDriver : ISuspensionDriver
     // on windows: %LocalAppData%\AvaloniaTFTPClient\State.json
     private string StatePath => Path.Combine(GetLocalApplicationFolder(), "State.json");
 
-    public IObservable<Unit> InvalidateState()
-    {
-        return Observable.Return(Unit.Default);
-    }
-
-    public IObservable<object> LoadState()
+    public MainWindowViewModel LoadState()
     {
         try
         {
-            using(var stream = File.OpenRead(StatePath))
-            {
-                var state = JsonSerializer.Deserialize<MySavedState>(stream);
+            using var stream = File.OpenRead(StatePath);
+            var state = JsonSerializer.Deserialize<MySavedState>(stream);
 
-                if(state != null)
+            if(state != null)
+            {
+                return new()
                 {
-                    return Observable.Return(new MainWindowViewModel()
-                    {
-                        IsAutoGenerateNames = state.IsAutoGenerateNames,
-                        IsDownload = state.IsDownload,
-                        Server = state.Server,
-                        RemoteDir = state.RemoteDir,
-                        LocalFile = state.LocalFile,
-                        RemoteFile = state.RemoteFile,
-                        Settings = state.Settings.ToTFTPSettings()
-                    });
-                }
+                    IsAutoGenerateNames = state.IsAutoGenerateNames,
+                    IsDownload = state.IsDownload,
+                    Server = state.Server,
+                    RemoteDir = state.RemoteDir,
+                    LocalFile = state.LocalFile,
+                    RemoteFile = state.RemoteFile,
+                    Settings = state.Settings.ToTFTPSettings()
+                };
             }
         }
         catch
         {
         }
-        return Observable.Return(new MainWindowViewModel());
+        return new MainWindowViewModel();
     }
 
-    public IObservable<Unit> SaveState(object state)
+    public void SaveState(MainWindowViewModel vm)
     {
         try
         {
-            if(state is MainWindowViewModel viewModel)
-            {
-                using(var stream = File.Create(StatePath))
+            using var stream = File.Create(StatePath);
+            jsonSerializerOptions = new JsonSerializerOptions { WriteIndented = true };
+            JsonSerializer.Serialize(stream,
+                new MySavedState
                 {
-                    JsonSerializer.Serialize(stream,
-                        new MySavedState
-                        {
-                            Server = viewModel.Server,
-                            IsDownload = viewModel.IsDownload,
-                            LocalFile = viewModel.LocalFile,
-                            RemoteFile = viewModel.RemoteFile,
-                            RemoteDir = viewModel.RemoteDir,
-                            IsAutoGenerateNames = viewModel.IsAutoGenerateNames,
-                            Settings = MySavedSettings.FromTFTPSettings(viewModel.Settings)
-                        },
-                        new JsonSerializerOptions { WriteIndented = true });
-                }
-            }
+                    Server = vm.Server,
+                    IsDownload = vm.IsDownload,
+                    LocalFile = vm.LocalFile,
+                    RemoteFile = vm.RemoteFile,
+                    RemoteDir = vm.RemoteDir,
+                    IsAutoGenerateNames = vm.IsAutoGenerateNames,
+                    Settings = MySavedSettings.FromTFTPSettings(vm.Settings)
+                },
+                jsonSerializerOptions);
         }
         catch
         {
         }
-        return Observable.Return(Unit.Default);
     }
 }
