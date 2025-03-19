@@ -35,7 +35,8 @@
             IsDefault="True"
             IsCancel="True"
             MinWidth="70"
-            ex:WindowCloser.IsCloseOkay="True">
+            Command="{CompiledBinding DoOkCommand}"
+            CommandParameter="{CompiledBinding RelativeSource={RelativeSource AncestorType=Window}, Mode=OneWay, Converter={StaticResource dialogCloserConverter}}">
             OK
         </Button>
 

@@ -29,7 +29,4 @@
     <PackageReference Include="Baksteen.Net.TFTP.Client" Version="1.0.0" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Baksteen.Avalonia.Tools.WindowCloser\Baksteen.Avalonia.Tools.WindowCloser.csproj" />
-  </ItemGroup>
 </Project>

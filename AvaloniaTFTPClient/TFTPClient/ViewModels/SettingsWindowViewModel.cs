@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Threading.Tasks;
+using Avalonia.Controls;
 using Baksteen.Net.TFTP.Client;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using UIClient.DialogCloser;
 using static Baksteen.Net.TFTP.Client.TFTPClient;
 
 namespace UIClient.ViewModels;
@@ -52,5 +55,19 @@ public partial class SettingsWindowViewModel : ViewModelBase
             Timeout = (int)value.ResponseTimeout.TotalMilliseconds;
             Ttl = value.Ttl;
         }
+    }
+
+    [RelayCommand]
+    private async Task DoOk(IDialogCloser closer)
+    {
+        closer.Close(this);
+        await Task.CompletedTask;
+    }
+
+    [RelayCommand]
+    private async Task DoCancel(IDialogCloser closer)
+    {
+        closer.Close();
+        await Task.CompletedTask;
     }
 }

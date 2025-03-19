@@ -20,6 +20,10 @@ public static class WindowCloser
         false,
         false);
 
+    public static readonly AvaloniaProperty<object?> DialogResultProperty = AvaloniaProperty.RegisterAttached<Button, object?>(
+    "DialogResult",
+    typeof(WindowCloser));
+
     public static bool GetIsCloseOkay(AvaloniaObject obj)
     {
         return obj.GetValue(IsCloseOkayProperty) as bool? ?? false;
@@ -40,6 +44,16 @@ public static class WindowCloser
     {
         obj.SetValue(IsCloseCancelProperty, value);
         RegisterHooks(obj, value);
+    }
+
+    public static object? GetDialogResult(AvaloniaObject obj)
+    {
+        return obj.GetValue(DialogResultProperty);
+    }
+
+    public static void SetDialogResult(AvaloniaObject obj, object? value)
+    {
+        obj.SetValue(DialogResultProperty, value);
     }
 
     private static void RegisterHooks(AvaloniaObject obj, bool value)
@@ -83,7 +97,14 @@ public static class WindowCloser
                 }
                 else
                 {
-                    window.Close(window.DataContext);
+                    if(button.IsSet(DialogResultProperty))
+                    {
+                        window.Close(button.GetValue(DialogResultProperty));
+                    }
+                    else
+                    {
+                        window.Close(window.DataContext);
+                    }
                 }
             }
         }

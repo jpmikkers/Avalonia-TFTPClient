@@ -1,7 +1,14 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:UIClient.ViewModels"
              xmlns:local="using:UIClient"
+             xmlns:dc="using:UIClient.DialogCloser"
              x:Class="UIClient.App">
+
+  <Application.Resources>
+    <dc:DialogCloserConverter x:Key="dialogCloserConverter" />
+  </Application.Resources>
+  
 	<Application.DataTemplates>
 		<!--<local:ViewLocator/>-->
 	</Application.DataTemplates>

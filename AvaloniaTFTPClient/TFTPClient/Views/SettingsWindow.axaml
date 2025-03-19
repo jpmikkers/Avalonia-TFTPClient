@@ -1,9 +1,9 @@
 <Window
     x:Class="UIClient.Views.SettingsWindow"
     xmlns="https://github.com/avaloniaui"
-    xmlns:ex="using:Baksteen.Avalonia.Tools.WindowCloser"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ex="using:Baksteen.Avalonia.Tools.WindowCloser"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:UIClient.ViewModels"
     Title="Settings"
@@ -15,20 +15,12 @@
     CanResize="False"
     Icon="/Assets/avalonia-logo.ico"
     SizeToContent="WidthAndHeight"
-	WindowStartupLocation="CenterOwner"
+    WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
-
-    <Window.Resources>
-        <vm:TextCaseConverter x:Key="textCaseConverter" />
-    </Window.Resources>
 
     <Design.DataContext>
         <vm:SettingsWindowViewModel />
     </Design.DataContext>
-
-    <!--
-		<TextBox Text="{Binding TheContent, Converter={StaticResource textCaseConverter}, ConverterParameter=lower}" Grid.Row="4" Grid.Column="1" Margin="2"></TextBox>
-	-->
 
     <Grid Margin="4">
         <Grid.RowDefinitions>
@@ -168,8 +160,22 @@
             HorizontalAlignment="Right"
             Orientation="Horizontal"
             Spacing="4">
-          <Button ex:WindowCloser.IsCloseOkay="True" IsDefault="True">OK</Button>
-          <Button ex:WindowCloser.IsCloseCancel="True" IsCancel="True">Cancel</Button>
+            <Button
+                Command="{CompiledBinding DoOkCommand}"
+                CommandParameter="{CompiledBinding RelativeSource={RelativeSource AncestorType=Window},
+                                                   Mode=OneWay,
+                                                   Converter={StaticResource dialogCloserConverter}}"
+                IsDefault="True">
+                OK
+            </Button>
+            <Button
+                Command="{CompiledBinding DoCancelCommand}"
+                CommandParameter="{CompiledBinding RelativeSource={RelativeSource AncestorType=Window},
+                                                   Mode=OneWay,
+                                                   Converter={StaticResource dialogCloserConverter}}"
+                IsCancel="True">
+                Cancel
+            </Button>
         </StackPanel>
     </Grid>
 </Window>
