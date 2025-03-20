@@ -13,7 +13,7 @@
     d:DesignWidth="450"
     x:DataType="vm:SettingsWindowViewModel"
     CanResize="False"
-    Icon="/Assets/avalonia-logo.ico"
+    Icon="/Assets/tftpclient.ico"
     SizeToContent="WidthAndHeight"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">

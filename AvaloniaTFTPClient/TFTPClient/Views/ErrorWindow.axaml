@@ -12,6 +12,7 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     x:DataType="vm:ErrorWindowViewModel"
+    Icon="/Assets/tftpclient.ico"
     SizeToContent="WidthAndHeight"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
