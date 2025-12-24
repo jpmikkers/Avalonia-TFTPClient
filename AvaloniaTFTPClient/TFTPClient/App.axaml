@@ -15,7 +15,7 @@
 	
 	<Application.Styles>
 
-		<SimpleTheme/>
+    <SimpleTheme/>
 		<!--<FluentTheme/>-->
 		
 		<!--<Style Selector="Window">
