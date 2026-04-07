@@ -3,8 +3,6 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using UIClient.ViewModels;
 using UIClient.Views;
-using Avalonia.Data.Core.Plugins;
-using System.Linq;
 namespace UIClient;
 
 public partial class App : Application
@@ -14,6 +12,9 @@ public partial class App : Application
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
+#if DEBUG
+        this.AttachDeveloperTools();
+#endif
     }
 
     public override void OnFrameworkInitializationCompleted()
@@ -22,13 +23,6 @@ public partial class App : Application
         {
             // Line below is needed to remove Avalonia data validation.
             // Without this line you will get duplicate validations from both Avalonia and CT
-
-            foreach(var validator in BindingPlugins.DataValidators.Where(x => x is DataAnnotationsValidationPlugin).ToList())
-            {
-                BindingPlugins.DataValidators.Remove(validator);
-            }
-
-            //desktop.MainWindow = AppHost!.Services.GetRequiredService<MainWindow>();
 
             desktop.MainWindow = new MainWindow
             {

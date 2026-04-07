@@ -1,11 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using Avalonia.Controls;
-using Baksteen.Net.TFTP.Client;
+﻿using Baksteen.Net.TFTP.Client;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System;
+using System.Threading.Tasks;
 using UIClient.DialogCloser;
-using static Baksteen.Net.TFTP.Client.TFTPClient;
 
 namespace UIClient.ViewModels;
 
@@ -38,7 +36,8 @@ public partial class SettingsWindowViewModel : ViewModelBase
     {
     }
 
-    public TFTPClient.Settings Settings {
+    public TFTPClient.Settings Settings
+    {
         get => new()
         {
             BlockSize = BlockSize,
@@ -48,7 +47,8 @@ public partial class SettingsWindowViewModel : ViewModelBase
             Ttl = (short)Ttl
         };
 
-        set {
+        set
+        {
             DontFragment = value.DontFragment;
             BlockSize = value.BlockSize;
             Retries = value.Retries;
