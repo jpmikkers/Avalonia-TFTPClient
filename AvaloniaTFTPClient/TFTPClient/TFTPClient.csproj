@@ -20,13 +20,12 @@
     <TrimmableAssembly Include="Avalonia.Themes.Default" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="12.0.0" />
-    <PackageReference Include="Avalonia.Desktop" Version="12.0.0" />
-    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-    <PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="12.0.0" />
-    <PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.0" />
-    <PackageReference Include="Avalonia.Themes.Simple" Version="12.0.0" />
-    <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.0" />
+    <PackageReference Include="Avalonia" Version="12.0.2" />
+    <PackageReference Include="Avalonia.Desktop" Version="12.0.2" />
+    <PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="12.0.2" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.2" />
+    <PackageReference Include="Avalonia.Themes.Simple" Version="12.0.2" />
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.1" />
     <PackageReference Include="Baksteen.Net.TFTP.Client" Version="1.0.0" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
   </ItemGroup>
