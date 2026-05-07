@@ -1,0 +1,59 @@
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Baksteen.Avalonia.Controls.Fluent">
+
+    <!--
+        to USE this generated control in your app with the correct styling, you have to
+        merge this dictionary in App.axaml, like so:
+
+        <Application.Resources>
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                     <ResourceInclude Source="/MyLabeledContentControl.axaml"/>
+                </ResourceDictionary.MergedDictionaries>			
+            </ResourceDictionary>
+        </Application.Resources>
+
+        see also:
+        https://github.com/AvaloniaUI/Avalonia.Samples/blob/main/src/Avalonia.Samples/CustomControls/RatingControlSample/App.axaml
+
+        Additional resources
+        Using Control Themes:
+        https://docs.avaloniaui.net/docs/basics/user-interface/styling/control-themes
+        Using Theme Variants:
+        https://docs.avaloniaui.net/docs/guides/styles-and-resources/how-to-use-theme-variants
+
+        https://docs.avaloniaui.net/docs/styling/control-template-walkthrough
+    -->
+
+    <Design.PreviewWith>
+        <StackPanel Width="400" Spacing="10">
+            <controls:LabeledContentControl Header="Address">
+                <TextBox>hahaha</TextBox>
+            </controls:LabeledContentControl>
+            <controls:LabeledContentControl Header="Location">
+                <TextBox>hllkkahlahlla</TextBox>
+            </controls:LabeledContentControl>
+        </StackPanel>
+    </Design.PreviewWith>
+
+    <ControlTheme x:Key="{x:Type controls:LabeledContentControl}" TargetType="controls:LabeledContentControl">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Background="{TemplateBinding Background}">
+                    <StackPanel Spacing="4">
+                        <Label Margin="0" Padding="0" Name="PART_HeaderLabel" Content="{TemplateBinding Header}" FontWeight="SemiBold"/>
+                        <ContentPresenter
+                            Padding="{TemplateBinding Padding}" 
+                            Name="PART_ContentPresenter"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}" />
+                    </StackPanel>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>

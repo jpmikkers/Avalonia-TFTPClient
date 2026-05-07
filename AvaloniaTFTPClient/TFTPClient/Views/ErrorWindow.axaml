@@ -9,6 +9,9 @@
     Title="{CompiledBinding Title}"
     MaxWidth="800"
     MaxHeight="600"
+    MinHeight="200"
+    MinWidth="300"
+
     d:DesignHeight="450"
     d:DesignWidth="800"
     x:DataType="vm:ErrorWindowViewModel"
@@ -35,7 +38,7 @@
             DockPanel.Dock="Bottom"
             IsDefault="True"
             IsCancel="True"
-            MinWidth="70"
+            Padding="20,10"
             Command="{CompiledBinding DoOkCommand}"
             CommandParameter="{CompiledBinding RelativeSource={RelativeSource AncestorType=Window}, Mode=OneWay, Converter={StaticResource dialogCloserConverter}}">
             OK

@@ -5,159 +5,34 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ex="using:Baksteen.Avalonia.Tools.WindowCloser"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uiclient="using:Baksteen.Avalonia.Controls.Fluent"
     xmlns:vm="using:UIClient.ViewModels"
     Title="Settings"
-    Width="250"
-    Height="220"
-    d:DesignHeight="320"
-    d:DesignWidth="450"
+    d:DesignHeight="420"
+    d:DesignWidth="270"
+    MinHeight="420"
+    MinWidth="270"
     x:DataType="vm:SettingsWindowViewModel"
-    CanResize="False"
-    Icon="/Assets/tftpclient.ico"
     SizeToContent="WidthAndHeight"
+    CanResize="True"
+    Icon="/Assets/tftpclient.ico"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
+
+    <Window.Resources>
+        <x:Double x:Key="NumericFieldsMinWidth">200</x:Double>
+    </Window.Resources>
 
     <Design.DataContext>
         <vm:SettingsWindowViewModel />
     </Design.DataContext>
 
-    <Grid Margin="4">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" MinWidth="150" />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
-        <Label
-            Grid.Row="0"
-            Grid.Column="0"
-            Margin="2"
-            Target="fieldDontFragment">
-            Don't fragment packets
-        </Label>
-        <CheckBox
-            Name="fieldDontFragment"
-            Grid.Row="0"
-            Grid.Column="1"
-            Margin="2"
-            IsChecked="{Binding DontFragment}" />
-
-        <Label
-            Grid.Row="1"
-            Grid.Column="0"
-            Margin="2"
-            Target="fieldBlockSize">
-            Blocksize
-        </Label>
-        <NumericUpDown
-            Name="fieldBlockSize"
-            Grid.Row="1"
-            Grid.Column="1"
-            Margin="2"
-            ClipValueToMinMax="True"
-            FormatString="0"
-            Increment="16"
-            Maximum="8192"
-            Minimum="512"
-            ParsingNumberStyle="Integer"
-            Value="{Binding BlockSize}" />
-        <Label
-            Grid.Row="1"
-            Grid.Column="2"
-            Margin="2">
-            bytes
-        </Label>
-
-        <Label
-            Grid.Row="2"
-            Grid.Column="0"
-            Margin="2"
-            Target="fieldTTL">
-            TTL
-        </Label>
-        <NumericUpDown
-            Name="fieldTTL"
-            Grid.Row="2"
-            Grid.Column="1"
-            Margin="2"
-            ClipValueToMinMax="True"
-            Maximum="20"
-            Minimum="-1"
-            ParsingNumberStyle="Integer"
-            Value="{Binding Ttl}" />
-        <Label
-            Grid.Row="2"
-            Grid.Column="2"
-            Margin="2"
-            Target="fieldTTL">
-            hops
-        </Label>
-
-        <Label
-            Grid.Row="3"
-            Grid.Column="0"
-            Margin="2"
-            Target="fieldTimeout">
-            Timeout
-        </Label>
-        <NumericUpDown
-            Name="fieldTimeout"
-            Grid.Row="3"
-            Grid.Column="1"
-            Margin="2"
-            ClipValueToMinMax="True"
-            Increment="10"
-            Maximum="10000"
-            Minimum="10"
-            ParsingNumberStyle="Integer"
-            Value="{Binding Timeout}" />
-        <Label
-            Grid.Row="3"
-            Grid.Column="2"
-            Margin="2"
-            Target="fieldTimeout">
-            ms
-        </Label>
-
-        <Label
-            Grid.Row="4"
-            Grid.Column="0"
-            Margin="2"
-            Target="fieldRetries">
-            Retries
-        </Label>
-        <NumericUpDown
-            Name="fieldRetries"
-            Grid.Row="4"
-            Grid.Column="1"
-            Margin="2"
-            ClipValueToMinMax="True"
-            Maximum="20"
-            Minimum="0"
-            ParsingNumberStyle="Integer"
-            Value="{Binding Retries}" />
-        <Label
-            Grid.Row="4"
-            Grid.Column="2"
-            Margin="2"
-            Target="fieldRetries">
-            times
-        </Label>
+    <DockPanel>
 
         <StackPanel
-            Grid.Row="5"
-            Grid.Column="0"
-            Grid.ColumnSpan="3"
-            Margin="2"
+            Margin="10"
             HorizontalAlignment="Right"
+            DockPanel.Dock="Bottom"
             Orientation="Horizontal"
             Spacing="4">
             <Button
@@ -166,7 +41,7 @@
                                                    Mode=OneWay,
                                                    Converter={StaticResource dialogCloserConverter}}"
                 IsDefault="True">
-                OK
+                _OK
             </Button>
             <Button
                 Command="{CompiledBinding DoCancelCommand}"
@@ -174,8 +49,85 @@
                                                    Mode=OneWay,
                                                    Converter={StaticResource dialogCloserConverter}}"
                 IsCancel="True">
-                Cancel
+                _Cancel
             </Button>
         </StackPanel>
-    </Grid>
+
+        <ScrollViewer>
+            <StackPanel Margin="12" Spacing="20">
+
+                <uiclient:LabeledContentControl Header="_Blocksize">
+                    <StackPanel Orientation="Horizontal">
+                        <NumericUpDown
+                            Name="fieldBlockSize"
+                            MinWidth="{StaticResource NumericFieldsMinWidth}"
+                            ClipValueToMinMax="True"
+                            FormatString="0"
+                            Increment="16"
+                            Maximum="8192"
+                            Minimum="512"
+                            ParsingNumberStyle="Integer"
+                            Value="{Binding BlockSize}" />
+                        <Label Margin="2">
+                            bytes
+                        </Label>
+                    </StackPanel>
+                </uiclient:LabeledContentControl>
+
+                <CheckBox Name="fieldDontFragment" IsChecked="{Binding DontFragment}">
+                    Do not _fragment packets
+                </CheckBox>
+
+                <uiclient:LabeledContentControl Header="TT_L (time to live)">
+                    <StackPanel Orientation="Horizontal">
+                        <NumericUpDown
+                            Name="fieldTTL"
+                            MinWidth="{StaticResource NumericFieldsMinWidth}"
+                            ClipValueToMinMax="True"
+                            Maximum="20"
+                            Minimum="-1"
+                            ParsingNumberStyle="Integer"
+                            Value="{Binding Ttl}" />
+                        <Label Margin="2">
+                            hops
+                        </Label>
+                    </StackPanel>
+                </uiclient:LabeledContentControl>
+
+                <uiclient:LabeledContentControl Header="_Timeout">
+                    <StackPanel Orientation="Horizontal">
+                        <NumericUpDown
+                            Name="fieldTimeout"
+                            MinWidth="{StaticResource NumericFieldsMinWidth}"
+                            ClipValueToMinMax="True"
+                            Increment="10"
+                            Maximum="10000"
+                            Minimum="10"
+                            ParsingNumberStyle="Integer"
+                            Value="{Binding Timeout}" />
+                        <Label Margin="2">ms</Label>
+                    </StackPanel>
+                </uiclient:LabeledContentControl>
+
+                <uiclient:LabeledContentControl Header="_Retries">
+                    <StackPanel Orientation="Horizontal">
+                        <NumericUpDown
+                            Name="fieldRetries"
+                            MinWidth="{StaticResource NumericFieldsMinWidth}"
+                            ClipValueToMinMax="True"
+                            Maximum="20"
+                            Minimum="0"
+                            ParsingNumberStyle="Integer"
+                            Value="{Binding Retries}" />
+                        <Label Margin="2">times</Label>
+                    </StackPanel>
+                </uiclient:LabeledContentControl>
+
+
+            </StackPanel>
+
+        </ScrollViewer>
+
+    </DockPanel>
+
 </Window>
