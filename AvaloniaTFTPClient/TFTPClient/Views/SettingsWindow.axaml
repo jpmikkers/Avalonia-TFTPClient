@@ -12,6 +12,7 @@
     d:DesignWidth="270"
     MinHeight="420"
     MinWidth="270"
+    Padding="{StaticResource TFTP_WindowPadding}"
     x:DataType="vm:SettingsWindowViewModel"
     SizeToContent="WidthAndHeight"
     CanResize="True"
@@ -28,9 +29,7 @@
     </Design.DataContext>
 
     <DockPanel>
-
         <StackPanel
-            Margin="10"
             HorizontalAlignment="Right"
             DockPanel.Dock="Bottom"
             Orientation="Horizontal"
@@ -54,8 +53,7 @@
         </StackPanel>
 
         <ScrollViewer>
-            <StackPanel Margin="12" Spacing="20">
-
+            <StackPanel Spacing="20">
                 <uiclient:LabeledContentControl Header="_Blocksize">
                     <StackPanel Orientation="Horizontal">
                         <NumericUpDown

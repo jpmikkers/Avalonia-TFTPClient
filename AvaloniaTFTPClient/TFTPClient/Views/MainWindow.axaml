@@ -12,6 +12,7 @@
     Height="520"
     MinWidth="450"
     MinHeight="520"
+    Padding="{StaticResource TFTP_WindowPadding}"
     d:DesignHeight="520"
     d:DesignWidth="450"
     x:DataType="vm:MainWindowViewModel"
@@ -30,7 +31,7 @@
         <StreamGeometry x:Key="sg_upload">M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z</StreamGeometry>        
     </Window.Resources>
 
-    <DockPanel Margin="10" IsEnabled="{CompiledBinding !IsBusy}">
+    <DockPanel IsEnabled="{CompiledBinding !IsBusy}">
 
         <StackPanel
             HorizontalAlignment="Right"

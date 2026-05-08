@@ -8,6 +8,7 @@
 
     <Application.Resources>
         <ResourceDictionary>
+            <Thickness x:Key="TFTP_WindowPadding">12,10</Thickness>
             <dc:DialogCloserConverter x:Key="dialogCloserConverter" />
             <ResourceDictionary.MergedDictionaries>
                 <ResourceInclude Source="/TemplatedControl1.axaml" />
