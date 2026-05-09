@@ -11,9 +11,7 @@
             <Thickness x:Key="TFTP_WindowPadding">12,10</Thickness>
             <dc:DialogCloserConverter x:Key="dialogCloserConverter" />
             <ResourceDictionary.MergedDictionaries>
-                <ResourceInclude Source="/TemplatedControl1.axaml" />
                 <ResourceInclude Source="avares://Baksteen.Avalonia.Controls.Fluent/LabeledContentControl.axaml"/>
-                <!--<ResourceInclude Source="/MyLabeledContentControl.axaml"/> -->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
