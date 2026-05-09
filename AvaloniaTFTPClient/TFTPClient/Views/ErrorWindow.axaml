@@ -1,16 +1,16 @@
 <Window
     x:Class="UIClient.Views.ErrorWindow"
     xmlns="https://github.com/avaloniaui"
-    xmlns:ex="using:Baksteen.Avalonia.Tools.WindowCloser"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ex="using:Baksteen.Avalonia.Tools.WindowCloser"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:UIClient.ViewModels"
-    Title="{CompiledBinding Title}"
+    Title="{Binding Title}"
+    MinWidth="300"
+    MinHeight="200"
     MaxWidth="800"
     MaxHeight="600"
-    MinHeight="200"
-    MinWidth="300"
     Padding="{StaticResource TFTP_WindowPadding}"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -30,17 +30,16 @@
             BorderThickness="0"
             DockPanel.Dock="Top"
             IsReadOnly="True"
-            Text="{CompiledBinding Message,
-                                   Mode=OneWay}" />
+            Text="{Binding Message, Mode=OneWay}" />
 
         <Button
-            HorizontalAlignment="Right"
-            DockPanel.Dock="Bottom"
-            IsDefault="True"
-            IsCancel="True"
             Padding="20,10"
-            Command="{CompiledBinding DoOkCommand}"
-            CommandParameter="{CompiledBinding RelativeSource={RelativeSource AncestorType=Window}, Mode=OneWay, Converter={StaticResource dialogCloserConverter}}">
+            HorizontalAlignment="Right"
+            Command="{Binding DoOkCommand}"
+            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}, Mode=OneWay, Converter={StaticResource dialogCloserConverter}}"
+            DockPanel.Dock="Bottom"
+            IsCancel="True"
+            IsDefault="True">
             OK
         </Button>
 
@@ -50,6 +49,6 @@
             IsReadOnly="True"
             ScrollViewer.HorizontalScrollBarVisibility="Visible"
             ScrollViewer.VerticalScrollBarVisibility="Visible"
-            Text="{CompiledBinding Details}" />
+            Text="{Binding Details}" />
     </DockPanel>
 </Window>

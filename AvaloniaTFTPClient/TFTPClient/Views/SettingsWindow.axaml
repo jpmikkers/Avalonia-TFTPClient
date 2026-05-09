@@ -33,18 +33,18 @@
             HorizontalAlignment="Right"
             DockPanel.Dock="Bottom"
             Orientation="Horizontal"
-            Spacing="4">
+            Spacing="8">
             <Button
-                Command="{CompiledBinding DoOkCommand}"
-                CommandParameter="{CompiledBinding RelativeSource={RelativeSource AncestorType=Window},
+                Command="{Binding DoOkCommand}"
+                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window},
                                                    Mode=OneWay,
                                                    Converter={StaticResource dialogCloserConverter}}"
                 IsDefault="True">
                 _OK
             </Button>
             <Button
-                Command="{CompiledBinding DoCancelCommand}"
-                CommandParameter="{CompiledBinding RelativeSource={RelativeSource AncestorType=Window},
+                Command="{Binding DoCancelCommand}"
+                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window},
                                                    Mode=OneWay,
                                                    Converter={StaticResource dialogCloserConverter}}"
                 IsCancel="True">

@@ -60,7 +60,7 @@
         </Style>
     </Window.Styles>
 
-    <DockPanel IsEnabled="{CompiledBinding !IsBusy}">
+    <DockPanel IsEnabled="{Binding !IsBusy}">
 
         <DockPanel DockPanel.Dock="Bottom">
             <Arc
@@ -83,15 +83,19 @@
                 Orientation="Horizontal"
                 Spacing="10">
                 <Button Command="{Binding DoSettingsCommand}">
-                    <StackPanel Orientation="Horizontal" Spacing="6" Margin="4">
+                    <StackPanel
+                        Margin="4"
+                        Orientation="Horizontal"
+                        Spacing="6">
                         <PathIcon VerticalAlignment="Center" Data="{StaticResource sg_settings}" />
                         <AccessText VerticalAlignment="Center">_Settings</AccessText>
                     </StackPanel>
                 </Button>
-                <Button
-                    Classes="accent"
-                    Command="{Binding DoDownloadUploadCommand}">
-                    <StackPanel Orientation="Horizontal" Spacing="6" Margin="4">
+                <Button Classes="accent" Command="{Binding DoDownloadUploadCommand}">
+                    <StackPanel
+                        Margin="4"
+                        Orientation="Horizontal"
+                        Spacing="6">
                         <PathIcon
                             VerticalAlignment="Center"
                             Data="{StaticResource sg_download}"
@@ -162,7 +166,7 @@
                     <ProgressBar
                         Height="14"
                         CornerRadius="2"
-                        IsIndeterminate="{CompiledBinding IsIndeterminateProgress}"
+                        IsIndeterminate="{Binding IsIndeterminateProgress}"
                         Value="{Binding Progress}" />
 
                     <Label Content="{Binding Status}" ToolTip.Tip="{Binding Status}" />
