@@ -67,10 +67,10 @@
                 Width="34"
                 Height="34"
                 HorizontalAlignment="Left"
-                IsVisible="{Binding IsBusy}"
                 Classes="BusyAnim"
                 DockPanel.Dock="Left"
                 Fill="DarkGreen"
+                IsVisible="{Binding IsBusy}"
                 StartAngle="10"
                 Stroke="DarkGreen"
                 StrokeLineCap="Round"
@@ -82,14 +82,16 @@
                 DockPanel.Dock="Right"
                 Orientation="Horizontal"
                 Spacing="10">
-                <Button Padding="12" Command="{Binding DoSettingsCommand}">
-                    <StackPanel Orientation="Horizontal" Spacing="6">
+                <Button Command="{Binding DoSettingsCommand}">
+                    <StackPanel Orientation="Horizontal" Spacing="6" Margin="4">
                         <PathIcon VerticalAlignment="Center" Data="{StaticResource sg_settings}" />
                         <AccessText VerticalAlignment="Center">_Settings</AccessText>
                     </StackPanel>
                 </Button>
-                <Button Padding="12" Command="{Binding DoDownloadUploadCommand}">
-                    <StackPanel Orientation="Horizontal" Spacing="6">
+                <Button
+                    Classes="accent"
+                    Command="{Binding DoDownloadUploadCommand}">
+                    <StackPanel Orientation="Horizontal" Spacing="6" Margin="4">
                         <PathIcon
                             VerticalAlignment="Center"
                             Data="{StaticResource sg_download}"
