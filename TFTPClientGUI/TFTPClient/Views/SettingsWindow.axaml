@@ -1,0 +1,131 @@
+<Window
+    x:Class="UIClient.Views.SettingsWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ex="using:Baksteen.Avalonia.Tools.WindowCloser"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uiclient="using:Baksteen.Avalonia.Controls.Fluent"
+    xmlns:vm="using:UIClient.ViewModels"
+    Title="Settings"
+    d:DesignHeight="420"
+    d:DesignWidth="270"
+    MinHeight="420"
+    MinWidth="270"
+    Padding="{StaticResource TFTP_WindowPadding}"
+    x:DataType="vm:SettingsWindowViewModel"
+    SizeToContent="WidthAndHeight"
+    CanResize="True"
+    Icon="/Assets/tftpclient.ico"
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d">
+
+    <Window.Resources>
+        <x:Double x:Key="NumericFieldsMinWidth">200</x:Double>
+    </Window.Resources>
+
+    <Design.DataContext>
+        <vm:SettingsWindowViewModel />
+    </Design.DataContext>
+
+    <DockPanel>
+        <StackPanel
+            HorizontalAlignment="Right"
+            DockPanel.Dock="Bottom"
+            Orientation="Horizontal"
+            Spacing="8">
+            <Button
+                Command="{Binding DoOkCommand}"
+                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window},
+                                                   Mode=OneWay,
+                                                   Converter={StaticResource dialogCloserConverter}}"
+                IsDefault="True">
+                _OK
+            </Button>
+            <Button
+                Command="{Binding DoCancelCommand}"
+                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window},
+                                                   Mode=OneWay,
+                                                   Converter={StaticResource dialogCloserConverter}}"
+                IsCancel="True">
+                _Cancel
+            </Button>
+        </StackPanel>
+
+        <ScrollViewer>
+            <StackPanel Spacing="20">
+                <uiclient:LabeledContentControl Header="_Blocksize">
+                    <StackPanel Orientation="Horizontal">
+                        <NumericUpDown
+                            Name="fieldBlockSize"
+                            MinWidth="{StaticResource NumericFieldsMinWidth}"
+                            ClipValueToMinMax="True"
+                            FormatString="0"
+                            Increment="16"
+                            Maximum="8192"
+                            Minimum="512"
+                            ParsingNumberStyle="Integer"
+                            Value="{Binding BlockSize}" />
+                        <Label Margin="2">
+                            bytes
+                        </Label>
+                    </StackPanel>
+                </uiclient:LabeledContentControl>
+
+                <CheckBox Name="fieldDontFragment" IsChecked="{Binding DontFragment}">
+                    Do not _fragment packets
+                </CheckBox>
+
+                <uiclient:LabeledContentControl Header="TT_L (time to live)">
+                    <StackPanel Orientation="Horizontal">
+                        <NumericUpDown
+                            Name="fieldTTL"
+                            MinWidth="{StaticResource NumericFieldsMinWidth}"
+                            ClipValueToMinMax="True"
+                            Maximum="20"
+                            Minimum="-1"
+                            ParsingNumberStyle="Integer"
+                            Value="{Binding Ttl}" />
+                        <Label Margin="2">
+                            hops
+                        </Label>
+                    </StackPanel>
+                </uiclient:LabeledContentControl>
+
+                <uiclient:LabeledContentControl Header="_Timeout">
+                    <StackPanel Orientation="Horizontal">
+                        <NumericUpDown
+                            Name="fieldTimeout"
+                            MinWidth="{StaticResource NumericFieldsMinWidth}"
+                            ClipValueToMinMax="True"
+                            Increment="10"
+                            Maximum="10000"
+                            Minimum="10"
+                            ParsingNumberStyle="Integer"
+                            Value="{Binding Timeout}" />
+                        <Label Margin="2">ms</Label>
+                    </StackPanel>
+                </uiclient:LabeledContentControl>
+
+                <uiclient:LabeledContentControl Header="_Retries">
+                    <StackPanel Orientation="Horizontal">
+                        <NumericUpDown
+                            Name="fieldRetries"
+                            MinWidth="{StaticResource NumericFieldsMinWidth}"
+                            ClipValueToMinMax="True"
+                            Maximum="20"
+                            Minimum="0"
+                            ParsingNumberStyle="Integer"
+                            Value="{Binding Retries}" />
+                        <Label Margin="2">times</Label>
+                    </StackPanel>
+                </uiclient:LabeledContentControl>
+
+
+            </StackPanel>
+
+        </ScrollViewer>
+
+    </DockPanel>
+
+</Window>

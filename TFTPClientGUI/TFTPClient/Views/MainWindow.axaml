@@ -1,0 +1,181 @@
+<Window
+    x:Class="UIClient.Views.MainWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mycontrols="using:Baksteen.Avalonia.Controls.Fluent"
+    xmlns:uiclient="using:UIClient"
+    xmlns:vm="using:UIClient.ViewModels"
+    Title="TFTP Client"
+    Width="450"
+    Height="520"
+    MinWidth="450"
+    MinHeight="520"
+    Padding="{StaticResource TFTP_WindowPadding}"
+    d:DesignHeight="520"
+    d:DesignWidth="450"
+    x:DataType="vm:MainWindowViewModel"
+    CanResize="True"
+    Icon="/Assets/tftpclient.ico"
+    mc:Ignorable="d">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <Window.Resources>
+        <StreamGeometry x:Key="sg_settings">M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z</StreamGeometry>
+        <StreamGeometry x:Key="sg_arrowupdown">M10,8H6L12,2L18,8H14V16H18L12,22L6,16H10V8Z</StreamGeometry>
+        <StreamGeometry x:Key="sg_download">M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z</StreamGeometry>
+        <StreamGeometry x:Key="sg_upload">M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z</StreamGeometry>
+    </Window.Resources>
+
+    <Window.Styles>
+        <Style Selector="Arc.BusyAnim">
+            <Style.Animations>
+                <Animation
+                    IterationCount="INFINITE"
+                    PlaybackDirection="Normal"
+                    Duration="0:0:1">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="StartAngle" Value="0" />
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="StartAngle" Value="360" />
+                    </KeyFrame>
+                </Animation>
+                <Animation
+                    IterationCount="INFINITE"
+                    PlaybackDirection="Alternate"
+                    Duration="0:0:2">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="SweepAngle" Value="20" />
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="SweepAngle" Value="340" />
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
+        </Style>
+    </Window.Styles>
+
+    <DockPanel IsEnabled="{Binding !IsBusy}">
+
+        <DockPanel DockPanel.Dock="Bottom">
+            <Arc
+                Width="34"
+                Height="34"
+                HorizontalAlignment="Left"
+                Classes="BusyAnim"
+                DockPanel.Dock="Left"
+                Fill="DarkGreen"
+                IsVisible="{Binding IsBusy}"
+                StartAngle="10"
+                Stroke="DarkGreen"
+                StrokeLineCap="Round"
+                StrokeThickness="6"
+                SweepAngle="120" />
+
+            <StackPanel
+                HorizontalAlignment="Right"
+                DockPanel.Dock="Right"
+                Orientation="Horizontal"
+                Spacing="10">
+                <Button Command="{Binding DoSettingsCommand}">
+                    <StackPanel
+                        Margin="4"
+                        Orientation="Horizontal"
+                        Spacing="6">
+                        <PathIcon VerticalAlignment="Center" Data="{StaticResource sg_settings}" />
+                        <AccessText VerticalAlignment="Center">_Settings</AccessText>
+                    </StackPanel>
+                </Button>
+                <Button Classes="accent" Command="{Binding DoDownloadUploadCommand}">
+                    <StackPanel
+                        Margin="4"
+                        Orientation="Horizontal"
+                        Spacing="6">
+                        <PathIcon
+                            VerticalAlignment="Center"
+                            Data="{StaticResource sg_download}"
+                            IsVisible="{Binding IsDownload}" />
+                        <PathIcon
+                            VerticalAlignment="Center"
+                            Data="{StaticResource sg_upload}"
+                            IsVisible="{Binding !IsDownload}" />
+                        <AccessText VerticalAlignment="Center">S_tart transfer</AccessText>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </DockPanel>
+
+        <StackPanel Spacing="12">
+            <mycontrols:LabeledContentControl Header="_Server">
+                <TextBox Name="fieldServer" Text="{Binding Server}" />
+            </mycontrols:LabeledContentControl>
+
+            <mycontrols:LabeledContentControl Header="Operation">
+                <StackPanel
+                    Name="fieldOperation"
+                    Orientation="Horizontal"
+                    Spacing="20">
+                    <RadioButton GroupName="groupOperation" IsChecked="{Binding IsDownload}">_Download</RadioButton>
+                    <RadioButton GroupName="groupOperation" IsChecked="{Binding !IsDownload}">_Upload</RadioButton>
+                </StackPanel>
+            </mycontrols:LabeledContentControl>
+
+            <CheckBox IsChecked="{Binding IsAutoGenerateNames}">
+                _Auto construct remote filename
+            </CheckBox>
+
+            <mycontrols:LabeledContentControl Header="_Remote base dir">
+                <TextBox
+                    Name="fieldRemoteDir"
+                    IsEnabled="{Binding IsAutoGenerateNames}"
+                    Text="{Binding RemoteDir}" />
+            </mycontrols:LabeledContentControl>
+
+            <mycontrols:LabeledContentControl Header="_Remote file">
+                <TextBox
+                    Name="fieldRemoteFile"
+                    IsReadOnly="{Binding IsAutoGenerateNames}"
+                    Text="{Binding RemoteFile}" />
+            </mycontrols:LabeledContentControl>
+
+            <mycontrols:LabeledContentControl Header="_Local file">
+                <Grid ColumnDefinitions="* Auto">
+                    <TextBox
+                        Name="fieldLocalFile"
+                        Grid.Column="0"
+                        Text="{Binding LocalFile}" />
+
+                    <Button
+                        Grid.Column="1"
+                        Margin="4,0,0,0"
+                        VerticalAlignment="Center"
+                        Command="{Binding DoSelectFileCommand}"
+                        ToolTip.Tip="Select file">
+                        ...
+                    </Button>
+                </Grid>
+            </mycontrols:LabeledContentControl>
+
+            <mycontrols:LabeledContentControl Header="Transfer progress">
+                <StackPanel>
+                    <ProgressBar
+                        Height="14"
+                        CornerRadius="2"
+                        IsIndeterminate="{Binding IsIndeterminateProgress}"
+                        Value="{Binding Progress}" />
+
+                    <Label Content="{Binding Status}" ToolTip.Tip="{Binding Status}" />
+                </StackPanel>
+            </mycontrols:LabeledContentControl>
+
+        </StackPanel>
+
+    </DockPanel>
+
+
+</Window>

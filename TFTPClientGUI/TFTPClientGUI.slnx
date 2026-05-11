@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Baksteen.Avalonia.Controls.LabeledControl/Baksteen.Avalonia.Controls.Fluent.csproj" />
+  <Project Path="TFTPClient/TFTPClient.csproj" />
+</Solution>

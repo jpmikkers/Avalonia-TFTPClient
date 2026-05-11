@@ -1,0 +1,104 @@
+<Application
+    x:Class="UIClient.App"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dc="using:UIClient.DialogCloser"
+    xmlns:local="using:UIClient"
+    xmlns:vm="using:UIClient.ViewModels">
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <Thickness x:Key="TFTP_WindowPadding">12,10</Thickness>
+            <dc:DialogCloserConverter x:Key="dialogCloserConverter" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="avares://Baksteen.Avalonia.Controls.Fluent/LabeledContentControl.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+
+    <Application.DataTemplates>
+        <!--<local:ViewLocator/>-->
+    </Application.DataTemplates>
+
+    <Application.Styles>
+
+        <!--    <SimpleTheme/>        -->
+
+<FluentTheme>
+  <FluentTheme.Palettes>
+    <ColorPaletteResources x:Key="Light" Accent="#ff0073cf" AltHigh="White" AltLow="White" AltMedium="White" AltMediumHigh="White" AltMediumLow="White" BaseHigh="Black" BaseLow="#ffcccccc" BaseMedium="#ff898989" BaseMediumHigh="#ff5d5d5d" BaseMediumLow="#ff737373" ChromeAltLow="#ff5d5d5d" ChromeBlackHigh="Black" ChromeBlackLow="#ffcccccc" ChromeBlackMedium="#ff5d5d5d" ChromeBlackMediumLow="#ff898989" ChromeDisabledHigh="#ffcccccc" ChromeDisabledLow="#ff898989" ChromeGray="#ff737373" ChromeHigh="#ffcccccc" ChromeLow="#ffececec" ChromeMedium="#ffe6e6e6" ChromeMediumLow="#ffececec" ChromeWhite="White" ListLow="#ffe6e6e6" ListMedium="#ffcccccc" RegionColor="White" />
+    <ColorPaletteResources x:Key="Dark" Accent="#ff0073cf" AltHigh="Black" AltLow="Black" AltMedium="Black" AltMediumHigh="Black" AltMediumLow="Black" BaseHigh="White" BaseLow="#ff333333" BaseMedium="#ff9a9a9a" BaseMediumHigh="#ffb4b4b4" BaseMediumLow="#ff676767" ChromeAltLow="#ffb4b4b4" ChromeBlackHigh="Black" ChromeBlackLow="#ffb4b4b4" ChromeBlackMedium="Black" ChromeBlackMediumLow="Black" ChromeDisabledHigh="#ff333333" ChromeDisabledLow="#ff9a9a9a" ChromeGray="Gray" ChromeHigh="Gray" ChromeLow="#ff151515" ChromeMedium="#ff1d1d1d" ChromeMediumLow="#ff2c2c2c" ChromeWhite="White" ListLow="#ff1d1d1d" ListMedium="#ff333333" RegionColor="#ff0d0d1d" />
+  </FluentTheme.Palettes>
+</FluentTheme>
+
+        <!--        <StyleInclude Source="avares://TFTPClient/MyLabeledContentControl.axaml"/>        -->
+        <Style Selector="DataValidationErrors">
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <DockPanel LastChildFill="True">
+                        <ContentControl
+                            Content="{Binding (DataValidationErrors.Errors)}"
+                            ContentTemplate="{TemplateBinding ErrorTemplate}"
+                            DataContext="{TemplateBinding Owner}"
+                            DockPanel.Dock="Right"
+                            IsVisible="{Binding (DataValidationErrors.HasErrors)}" />
+                        <ContentPresenter
+                            Name="PART_ContentPresenter"
+                            Padding="{TemplateBinding Padding}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            CornerRadius="{TemplateBinding CornerRadius}" />
+                    </DockPanel>
+                </ControlTemplate>
+            </Setter>
+            <Setter Property="ErrorTemplate">
+                <DataTemplate x:DataType="{x:Type x:Object}">
+                    <Canvas
+                        Width="14"
+                        Height="14"
+                        Margin="4,0,1,0"
+                        Background="Transparent">
+                        <Canvas.Styles>
+                            <Style Selector="ToolTip">
+                                <Setter Property="Background" Value="Green" />
+                                <Setter Property="BorderBrush" Value="Red" />
+                            </Style>
+                        </Canvas.Styles>
+                        <ToolTip.Tip>
+                            <ItemsControl ItemsSource="{Binding}" />
+                        </ToolTip.Tip>
+                        <Path
+                            Data="M14,7 A7,7 0 0,0 0,7 M0,7 A7,7 0 1,0 14,7 M7,3l0,5 M7,9l0,2"
+                            Stroke="Red"
+                            StrokeThickness="2" />
+                    </Canvas>
+                </DataTemplate>
+            </Setter>
+        </Style>
+
+        <!--<Style Selector="Window">
+			<Setter Property="Background" Value="#FF444444"/>
+		</Style>-->
+
+        <!-- <StyleInclude Source="avares://Citrus.Avalonia/Citrus.xaml"/> -->
+        <!-- <FluentTheme Mode="Light"/> -->
+
+        <!--
+		
+		<Style Selector="Button">
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Border BorderThickness="0" Background="Beige" BorderBrush="Black" Padding="4" Margin="4" CornerRadius="4" BoxShadow="2 2 2 2 Gray">
+							<ContentPresenter Content="{TemplateBinding Content}" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+						</Border>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+		-->
+    </Application.Styles>
+</Application>
