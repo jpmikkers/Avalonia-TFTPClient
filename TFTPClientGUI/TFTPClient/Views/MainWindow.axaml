@@ -31,55 +31,10 @@
         <StreamGeometry x:Key="sg_upload">M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z</StreamGeometry>
     </Window.Resources>
 
-    <Window.Styles>
-        <Style Selector="Arc.BusyAnim">
-            <Style.Animations>
-                <Animation
-                    Easing="CubicEaseInOut"
-                    IterationCount="INFINITE"
-                    Duration="0:0:2">
-                    <KeyFrame Cue="0%">
-                        <Setter Property="SweepAngle" Value="30.0" />
-                        <Setter Property="StartAngle" Value="-90.0" />
-                    </KeyFrame>
-                    <KeyFrame Cue="50%">
-                        <Setter Property="SweepAngle" Value="330" />
-                        <Setter Property="StartAngle" Value="-60.0" />
-                    </KeyFrame>
-                    <KeyFrame Cue="100%">
-                        <Setter Property="SweepAngle" Value="30" />
-                        <Setter Property="StartAngle" Value="270.0" />
-                    </KeyFrame>
-                </Animation>
-                <Animation IterationCount="INFINITE" Duration="0:0:2.1">
-                    <KeyFrame Cue="0%">
-                        <Setter Property="RotateTransform.Angle" Value="0.0" />
-                    </KeyFrame>
-                    <KeyFrame Cue="100%">
-                        <Setter Property="RotateTransform.Angle" Value="360.0" />
-                    </KeyFrame>
-                </Animation>
-            </Style.Animations>
-        </Style>
-    </Window.Styles>
-
     <DockPanel IsEnabled="{Binding !IsBusy}">
 
         <DockPanel DockPanel.Dock="Bottom">
-            <Arc
-                Width="34"
-                Height="34"
-                HorizontalAlignment="Left"
-                Classes="BusyAnim"
-                DockPanel.Dock="Left"
-                Fill="DarkGreen"
-                IsVisible="{Binding IsBusy}"
-                StartAngle="10"
-                Stroke="DarkGreen"
-                StrokeLineCap="Round"
-                StrokeThickness="6"
-                SweepAngle="120" />
-
+            <mycontrols:SpinnerControl DockPanel.Dock="Left" Width="34" Height="34" Foreground="DarkGreen" IsVisible="{Binding IsBusy}"/>
             <StackPanel
                 HorizontalAlignment="Right"
                 DockPanel.Dock="Right"

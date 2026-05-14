@@ -12,6 +12,7 @@
             <dc:DialogCloserConverter x:Key="dialogCloserConverter" />
             <ResourceDictionary.MergedDictionaries>
                 <ResourceInclude Source="avares://Baksteen.Avalonia.Controls.Fluent/LabeledContentControl.axaml" />
+                <ResourceInclude Source="avares://Baksteen.Avalonia.Controls.Fluent/SpinnerControl.axaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

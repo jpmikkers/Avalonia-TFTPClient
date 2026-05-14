@@ -1,0 +1,76 @@
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Baksteen.Avalonia.Controls.Fluent">
+
+    <!--
+        Additional resources
+        Using Control Themes:
+        https://docs.avaloniaui.net/docs/basics/user-interface/styling/control-themes
+        Using Theme Variants:
+        https://docs.avaloniaui.net/docs/guides/styles-and-resources/how-to-use-theme-variants
+    -->
+
+    <Design.PreviewWith>
+        <StackPanel Spacing="10">
+            <StackPanel Background="{DynamicResource SystemRegionBrush}">
+                <controls:SpinnerControl
+                    Width="184"
+                    Height="184"
+                    Background="Black"
+                    Foreground="Green" />
+            </StackPanel>
+        </StackPanel>
+    </Design.PreviewWith>
+
+    <ControlTheme x:Key="{x:Type controls:SpinnerControl}" TargetType="controls:SpinnerControl">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Viewbox Stretch="Uniform">
+                    <Arc
+                        Name="PART_Arc"
+                        Width="200"
+                        Height="200"
+                        Stroke="{TemplateBinding Foreground}"
+                        StrokeLineCap="Round"
+                        StrokeThickness="{TemplateBinding SpinnerThickness}">
+                        <Arc.Styles>
+                            <Style Selector="Arc">
+                                <Setter Property="RenderTransform">
+                                    <RotateTransform Angle="0" />
+                                </Setter>
+                                <Style.Animations>
+                                    <Animation
+                                        Easing="CubicEaseInOut"
+                                        IterationCount="INFINITE"
+                                        Duration="0:0:2">
+                                        <KeyFrame Cue="0%">
+                                            <Setter Property="SweepAngle" Value="30.0" />
+                                            <Setter Property="StartAngle" Value="-90.0" />
+                                        </KeyFrame>
+                                        <KeyFrame Cue="50%">
+                                            <Setter Property="SweepAngle" Value="330" />
+                                            <Setter Property="StartAngle" Value="-60.0" />
+                                        </KeyFrame>
+                                        <KeyFrame Cue="100%">
+                                            <Setter Property="SweepAngle" Value="30" />
+                                            <Setter Property="StartAngle" Value="270.0" />
+                                        </KeyFrame>
+                                    </Animation>
+                                    <Animation IterationCount="INFINITE" Duration="0:0:2.1">
+                                        <KeyFrame Cue="0%">
+                                            <Setter Property="RotateTransform.Angle" Value="0.0" />
+                                        </KeyFrame>
+                                        <KeyFrame Cue="100%">
+                                            <Setter Property="RotateTransform.Angle" Value="360.0" />
+                                        </KeyFrame>
+                                    </Animation>
+                                </Style.Animations>
+                            </Style>
+                        </Arc.Styles>
+                    </Arc>
+                </Viewbox>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>
